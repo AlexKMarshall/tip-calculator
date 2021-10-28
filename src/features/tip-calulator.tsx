@@ -1,24 +1,135 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
+
+const presetTips = [5, 10, 15, 25, 50] as const
+
+type FormValues = {
+  bill: number
+  people: number
+  presetTip: typeof presetTips[number] | null
+  customTip: number | null
+}
+
+type FormValidators = {
+  [k in keyof FormValues]?: (val: unknown) => boolean
+}
+
+type FormValidity = {
+  [k in keyof FormValues]?:
+    | { status: 'error'; message?: string }
+    | { status: 'valid' }
+}
+
+type FormDirty = {
+  [k in keyof FormValues]?: { status: 'dirty' }
+}
+
+type FormState = {
+  values: FormValues
+  validity: FormValidity
+  dirty: FormDirty
+}
+
+const isPositive = (value: unknown) => typeof value === 'number' && value > 0
+const isNonNegative = (value: unknown) =>
+  typeof value === 'number' && value >= 0
+
+const formValidators: FormValidators = {
+  bill: isPositive,
+  people: isPositive,
+  customTip: (val) => val === null || isNonNegative(val),
+}
+
+const initialFormState: FormState = {
+  values: {
+    bill: 0,
+    people: 0,
+    presetTip: 15,
+    customTip: null,
+  },
+  validity: {},
+  dirty: {},
+}
+
+type FormAction<T extends keyof FormState['values']> =
+  | {
+      type: 'updateField'
+      target: T
+      value: FormState['values'][T]
+    }
+  | { type: 'deselectTip'; target: 'presetTip' | 'customTip' }
+  | { type: 'reset' }
+  | { type: 'validateField'; target: T }
+  | { type: 'dirtyField'; target: T }
+
+function formReducer<T extends keyof FormState['values']>(
+  state: FormState,
+  action: FormAction<T>
+): FormState {
+  switch (action.type) {
+    case 'updateField': {
+      const updatedState = {
+        ...state,
+        values: { ...state.values, [action.target]: action.value },
+      }
+
+      if (state.dirty[action.target]) {
+        return formReducer(updatedState, {
+          type: 'validateField',
+          target: action.target,
+        })
+      }
+      return updatedState
+    }
+    case 'validateField': {
+      const validator = formValidators[action.target]
+      if (validator) {
+        const currentValue = state.values[action.target]
+        const isValid = validator(currentValue)
+        return {
+          ...state,
+          validity: {
+            ...state.validity,
+            [action.target]: { status: isValid ? 'valid' : 'error' },
+          },
+        }
+      }
+      return state
+    }
+    case 'dirtyField': {
+      return {
+        ...state,
+        dirty: { ...state.dirty, [action.target]: { status: 'dirty' } },
+      }
+    }
+    case 'deselectTip': {
+      return formReducer(state, {
+        type: 'updateField',
+        target: action.target,
+        value: null,
+      })
+    }
+    case 'reset': {
+      return initialFormState
+    }
+  }
+}
 
 type Props = {}
 export function TipCalculator(props: Props): JSX.Element {
-  const [billField, setBillField] = useState({ value: 0 })
-  const [peopleField, setPeopleField] = useState({ value: 0 })
-  const predefinedTips = [5, 10, 15, 25, 50] as const
-  const [selectedTip, setSelectedTip] = useState<
-    typeof predefinedTips[number] | null
-  >(15)
-  const [customTipField, setCustomTipField] = useState({ value: 0 })
+  const [formState, dispatch] = useReducer(formReducer, initialFormState)
 
-  const tip = selectedTip ?? customTipField.value
+  const {
+    values: { bill, presetTip, people, customTip },
+    validity,
+  } = formState
 
-  const isFormValid = billField.value > 0 && peopleField.value > 0 && tip >= 0
+  const appliedTip = presetTip ?? customTip ?? 0
 
-  const tipPerPerson = isFormValid
-    ? (billField.value * (tip / 100)) / peopleField.value
-    : 0
+  const isFormValid = bill > 0 && people > 0 && appliedTip >= 0
+
+  const tipPerPerson = isFormValid ? (bill * (appliedTip / 100)) / people : 0
   const totalPerPerson = isFormValid
-    ? (billField.value * (1 + tip / 100)) / peopleField.value
+    ? (bill * (1 + appliedTip / 100)) / people
     : 0
 
   return (
@@ -27,59 +138,84 @@ export function TipCalculator(props: Props): JSX.Element {
       <form>
         <label>
           Bill
+          {validity.bill?.status === 'error' ? 'Invalid field' : null}
           <input
             type="number"
-            value={billField.value}
+            value={bill}
             onChange={(e) => {
-              setBillField((field) => ({
-                ...field,
+              dispatch({
+                type: 'updateField',
+                target: 'bill',
                 value: e.target.valueAsNumber,
-              }))
+              })
+            }}
+            onBlur={() => {
+              dispatch({ type: 'validateField', target: 'bill' })
+              dispatch({ type: 'dirtyField', target: 'bill' })
             }}
           />
         </label>
         <fieldset>
           <legend>Select Tip %</legend>
-          {predefinedTips.map((tip) => (
-            <label key={tip}>
+          {presetTips.map((tipOption) => (
+            <label key={tipOption}>
               <input
                 type="radio"
-                value={tip}
+                value={tipOption}
                 name="tip-percent"
                 onChange={() => {
-                  setCustomTipField({ value: 0 })
-                  setSelectedTip(tip)
+                  dispatch({ type: 'deselectTip', target: 'customTip' })
+                  dispatch({
+                    type: 'updateField',
+                    target: 'presetTip',
+                    value: tipOption,
+                  })
                 }}
-                checked={tip === selectedTip}
+                checked={tipOption === presetTip}
               />
-              {tip}%
+              {tipOption}%
             </label>
           ))}
           <label>
             Custom Tip Amount
+            {validity.customTip?.status === 'error' ? 'Invalid field' : null}
             <input
               type="number"
-              value={customTipField.value}
-              onFocus={() => setSelectedTip(null)}
+              placeholder="Custom"
+              value={customTip ?? ''}
+              onFocus={() =>
+                dispatch({ type: 'deselectTip', target: 'presetTip' })
+              }
               onChange={(e) => {
-                setCustomTipField((field) => ({
-                  ...field,
+                dispatch({
+                  type: 'updateField',
+                  target: 'customTip',
                   value: e.target.valueAsNumber,
-                }))
+                })
+              }}
+              onBlur={() => {
+                dispatch({ type: 'validateField', target: 'customTip' })
+                dispatch({ type: 'dirtyField', target: 'customTip' })
               }}
             />
           </label>
         </fieldset>
         <label>
           Number of People
+          {validity.people?.status === 'error' ? 'Invalid field' : null}
           <input
             type="number"
-            value={peopleField.value}
+            value={people}
             onChange={(e) => {
-              setPeopleField((field) => ({
-                ...field,
+              dispatch({
+                type: 'updateField',
+                target: 'people',
                 value: e.target.valueAsNumber,
-              }))
+              })
+            }}
+            onBlur={() => {
+              dispatch({ type: 'validateField', target: 'people' })
+              dispatch({ type: 'dirtyField', target: 'people' })
             }}
           />
         </label>
@@ -91,7 +227,9 @@ export function TipCalculator(props: Props): JSX.Element {
           Total / person
           <output>{totalPerPerson.toFixed(2)}</output>
         </label>
-        <button type="reset">Reset</button>
+        <button type="reset" onClick={() => dispatch({ type: 'reset' })}>
+          Reset
+        </button>
       </form>
     </main>
   )
