@@ -1,4 +1,5 @@
-import { useReducer, useState } from 'react'
+import { NumberInput } from 'src/components'
+import { useReducer } from 'react'
 
 const presetTips = [5, 10, 15, 25, 50] as const
 
@@ -67,9 +68,10 @@ function formReducer<T extends keyof FormState['values']>(
 ): FormState {
   switch (action.type) {
     case 'updateField': {
+      const newValue = Number.isNaN(action.value) ? 0 : action.value
       const updatedState = {
         ...state,
-        values: { ...state.values, [action.target]: action.value },
+        values: { ...state.values, [action.target]: newValue },
       }
 
       if (state.dirty[action.target]) {
@@ -125,7 +127,10 @@ export function TipCalculator(props: Props): JSX.Element {
 
   const appliedTip = presetTip ?? customTip ?? 0
 
-  const isFormValid = bill > 0 && people > 0 && appliedTip >= 0
+  const isFormValid =
+    validity.bill?.status === 'valid' &&
+    validity.people?.status === 'valid' &&
+    validity.customTip?.status !== 'error'
 
   const tipPerPerson = isFormValid ? (bill * (appliedTip / 100)) / people : 0
   const totalPerPerson = isFormValid
@@ -142,6 +147,9 @@ export function TipCalculator(props: Props): JSX.Element {
           <input
             type="number"
             value={bill}
+            min="0"
+            step="0.01"
+            aria-invalid={validity.bill?.status === 'error'}
             onChange={(e) => {
               dispatch({
                 type: 'updateField',
@@ -200,7 +208,26 @@ export function TipCalculator(props: Props): JSX.Element {
             />
           </label>
         </fieldset>
-        <label>
+        <NumberInput
+          label="Number of People"
+          id="people"
+          errorMessage={
+            validity.people?.status === 'error' ? 'Invalid field' : undefined
+          }
+          value={people}
+          onChange={(value) => {
+            dispatch({
+              type: 'updateField',
+              target: 'people',
+              value,
+            })
+          }}
+          onBlur={() => {
+            dispatch({ type: 'validateField', target: 'people' })
+            dispatch({ type: 'dirtyField', target: 'people' })
+          }}
+        />
+        {/* <label>
           Number of People
           {validity.people?.status === 'error' ? 'Invalid field' : null}
           <input
@@ -218,7 +245,7 @@ export function TipCalculator(props: Props): JSX.Element {
               dispatch({ type: 'dirtyField', target: 'people' })
             }}
           />
-        </label>
+        </label> */}
         <label>
           Tip Amount / person
           <output>{tipPerPerson.toFixed(2)}</output>
