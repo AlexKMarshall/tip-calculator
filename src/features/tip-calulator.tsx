@@ -1,4 +1,6 @@
-import { NumberInput } from 'src/components'
+import { Heading, NumberInput, Text } from 'src/components'
+
+import { fontSize } from 'src/styles/typography.css'
 import { useReducer } from 'react'
 
 const presetTips = [5, 10, 15, 25, 50] as const
@@ -139,7 +141,9 @@ export function TipCalculator(props: Props): JSX.Element {
 
   return (
     <main>
-      <h1>Splitter</h1>
+      <Heading level="3" component="h1">
+        Splitter
+      </Heading>
       <form>
         <NumberInput
           label="Bill"
@@ -227,14 +231,24 @@ export function TipCalculator(props: Props): JSX.Element {
           }}
         />
         <label>
-          Tip Amount / person
-          <output>{tipPerPerson.toFixed(2)}</output>
+          <Text>Tip Amount</Text>
+          <Text size="xs">/ person</Text>
+          <output className={fontSize({ size: 'xl' })}>
+            {tipPerPerson.toFixed(2)}
+          </output>
         </label>
         <label>
-          Total / person
-          <output>{totalPerPerson.toFixed(2)}</output>
+          <Text>Total</Text>
+          <Text size="xs">/ person</Text>
+          <output className={fontSize({ size: 'xl' })}>
+            {totalPerPerson.toFixed(2)}
+          </output>
         </label>
-        <button type="reset" onClick={() => dispatch({ type: 'reset' })}>
+        <button
+          type="reset"
+          onClick={() => dispatch({ type: 'reset' })}
+          className={fontSize({ size: 'm' })}
+        >
           Reset
         </button>
       </form>

@@ -17,11 +17,11 @@ it('should calculate a tip', () => {
   userEvent.type(screen.getByLabelText(/people/i), people.toString())
   userEvent.tab()
 
-  expect(screen.getByLabelText(/tip amount \/ person/i)).toHaveValue(
-    expectedTipPerPerson.toFixed(2)
-  )
+  expect(
+    screen.getByRole('status', { name: /tip amount \/ person/i })
+  ).toHaveValue(expectedTipPerPerson.toFixed(2))
 
-  expect(screen.getByLabelText(/total \/ person/i)).toHaveValue(
+  expect(screen.getByRole('status', { name: /total \/ person/i })).toHaveValue(
     expectedTotalPerPerson.toFixed(2)
   )
 })
@@ -43,11 +43,11 @@ it('should calculate a custom tip', () => {
   userEvent.type(screen.getByLabelText(/people/i), people.toString())
   userEvent.tab()
 
-  expect(screen.getByLabelText(/tip amount \/ person/i)).toHaveValue(
-    expectedTipPerPerson.toFixed(2)
-  )
+  expect(
+    screen.getByRole('status', { name: /tip amount \/ person/i })
+  ).toHaveValue(expectedTipPerPerson.toFixed(2))
 
-  expect(screen.getByLabelText(/total \/ person/i)).toHaveValue(
+  expect(screen.getByRole('status', { name: /total \/ person/i })).toHaveValue(
     expectedTotalPerPerson.toFixed(2)
   )
 })
@@ -65,10 +65,12 @@ it('should not calculate when values are invalid', () => {
   expect(billField).toBeValid()
 
   // We haven't filled in other fields, so it shouldn't calculate the totals
-  expect(screen.getByLabelText(/tip amount \/ person/i)).toHaveValue(
+  expect(
+    screen.getByRole('status', { name: /tip amount \/ person/i })
+  ).toHaveValue((0).toFixed(2))
+  expect(screen.getByRole('status', { name: /total \/ person/i })).toHaveValue(
     (0).toFixed(2)
   )
-  expect(screen.getByLabelText(/total \/ person/i)).toHaveValue((0).toFixed(2))
 
   const peopleField = screen.getByLabelText(/people/i)
   userEvent.type(peopleField, '0')

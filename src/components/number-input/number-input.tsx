@@ -1,5 +1,8 @@
 import { AllHTMLAttributes, ReactNode } from 'react'
 
+import { Text } from 'src/components/text'
+import { fontSize } from 'src/styles/typography.css'
+
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
 type Props = Pick<InputProps, 'min' | 'step' | 'onBlur' | 'onFocus'> & {
@@ -23,10 +26,13 @@ export function NumberInput({
 }: Props): JSX.Element {
   return (
     <>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}>
+        <Text>{label}</Text>
+      </label>
 
-      {errorMessage ? <span id={`${id}-error`}>{errorMessage}</span> : null}
+      {errorMessage ? <Text id={`${id}-error`}>{errorMessage}</Text> : null}
       <input
+        className={fontSize({ size: 'm' })}
         id={id}
         type="number"
         value={value ?? ''}
