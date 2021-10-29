@@ -141,28 +141,26 @@ export function TipCalculator(props: Props): JSX.Element {
     <main>
       <h1>Splitter</h1>
       <form>
-        <label>
-          Bill
-          {validity.bill?.status === 'error' ? 'Invalid field' : null}
-          <input
-            type="number"
-            value={bill}
-            min="0"
-            step="0.01"
-            aria-invalid={validity.bill?.status === 'error'}
-            onChange={(e) => {
-              dispatch({
-                type: 'updateField',
-                target: 'bill',
-                value: e.target.valueAsNumber,
-              })
-            }}
-            onBlur={() => {
-              dispatch({ type: 'validateField', target: 'bill' })
-              dispatch({ type: 'dirtyField', target: 'bill' })
-            }}
-          />
-        </label>
+        <NumberInput
+          label="Bill"
+          id="bill"
+          errorMessage={
+            validity.bill?.status === 'error' ? 'Invalid field' : undefined
+          }
+          value={bill}
+          min="0"
+          onChange={(value) => {
+            dispatch({
+              type: 'updateField',
+              target: 'bill',
+              value,
+            })
+          }}
+          onBlur={() => {
+            dispatch({ type: 'validateField', target: 'bill' })
+            dispatch({ type: 'dirtyField', target: 'bill' })
+          }}
+        />
         <fieldset>
           <legend>Select Tip %</legend>
           {presetTips.map((tipOption) => (
@@ -184,29 +182,30 @@ export function TipCalculator(props: Props): JSX.Element {
               {tipOption}%
             </label>
           ))}
-          <label>
-            Custom Tip Amount
-            {validity.customTip?.status === 'error' ? 'Invalid field' : null}
-            <input
-              type="number"
-              placeholder="Custom"
-              value={customTip ?? ''}
-              onFocus={() =>
-                dispatch({ type: 'deselectTip', target: 'presetTip' })
-              }
-              onChange={(e) => {
-                dispatch({
-                  type: 'updateField',
-                  target: 'customTip',
-                  value: e.target.valueAsNumber,
-                })
-              }}
-              onBlur={() => {
-                dispatch({ type: 'validateField', target: 'customTip' })
-                dispatch({ type: 'dirtyField', target: 'customTip' })
-              }}
-            />
-          </label>
+          <NumberInput
+            label="Custom Tip Amount"
+            id="customTip"
+            errorMessage={
+              validity.customTip?.status === 'error'
+                ? 'Invalid field'
+                : undefined
+            }
+            value={customTip}
+            onChange={(value) => {
+              dispatch({
+                type: 'updateField',
+                target: 'customTip',
+                value,
+              })
+            }}
+            onBlur={() => {
+              dispatch({ type: 'validateField', target: 'customTip' })
+              dispatch({ type: 'dirtyField', target: 'customTip' })
+            }}
+            onFocus={() =>
+              dispatch({ type: 'deselectTip', target: 'presetTip' })
+            }
+          />
         </fieldset>
         <NumberInput
           label="Number of People"
@@ -227,25 +226,6 @@ export function TipCalculator(props: Props): JSX.Element {
             dispatch({ type: 'dirtyField', target: 'people' })
           }}
         />
-        {/* <label>
-          Number of People
-          {validity.people?.status === 'error' ? 'Invalid field' : null}
-          <input
-            type="number"
-            value={people}
-            onChange={(e) => {
-              dispatch({
-                type: 'updateField',
-                target: 'people',
-                value: e.target.valueAsNumber,
-              })
-            }}
-            onBlur={() => {
-              dispatch({ type: 'validateField', target: 'people' })
-              dispatch({ type: 'dirtyField', target: 'people' })
-            }}
-          />
-        </label> */}
         <label>
           Tip Amount / person
           <output>{tipPerPerson.toFixed(2)}</output>

@@ -2,7 +2,7 @@ import { AllHTMLAttributes, ReactNode } from 'react'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
-type Props = Pick<InputProps, 'min' | 'step' | 'onBlur'> & {
+type Props = Pick<InputProps, 'min' | 'step' | 'onBlur' | 'onFocus'> & {
   label: ReactNode
   id: string
   errorMessage?: string
@@ -19,6 +19,7 @@ export function NumberInput({
   step,
   onChange,
   onBlur,
+  onFocus,
 }: Props): JSX.Element {
   return (
     <>
@@ -37,6 +38,7 @@ export function NumberInput({
           onChange(e.target.valueAsNumber)
         }}
         onBlur={onBlur}
+        onFocus={onFocus}
       />
     </>
   )
