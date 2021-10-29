@@ -19,13 +19,13 @@ export function NumberInput({
   step,
   onChange,
   onBlur,
-  onFocus,
+  onFocus: onFocusProp,
 }: Props): JSX.Element {
   return (
     <>
       <label htmlFor={id}>{label}</label>
 
-      {errorMessage ? <span id={`${id}-error`}>errorMessage</span> : null}
+      {errorMessage ? <span id={`${id}-error`}>{errorMessage}</span> : null}
       <input
         id={id}
         type="number"
@@ -38,7 +38,10 @@ export function NumberInput({
           onChange(e.target.valueAsNumber)
         }}
         onBlur={onBlur}
-        onFocus={onFocus}
+        onFocus={(e) => {
+          e.target.select() // select the field content so we can easily type over it
+          onFocusProp?.(e)
+        }}
       />
     </>
   )
