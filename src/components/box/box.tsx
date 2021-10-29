@@ -1,10 +1,25 @@
+import clsx, { ClassValue } from 'clsx'
+
 import { ReactNode } from 'react'
-import { padding } from './box.css'
+import { Space } from 'src/styles/space.css'
+import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type Props = {
   children: ReactNode
-  size?: '2xs' | 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl'
+  padding?: Space
+  className?: ClassValue
 }
-export function Box({ size = 's', children }: Props): JSX.Element {
-  return <div className={padding({ size })}>{children}</div>
+export function Box({
+  padding = 's',
+  className,
+  children,
+}: Props): JSX.Element {
+  const userClasses = clsx(className)
+  const sprinkles = sprinklesFn({ padding })
+
+  return (
+    <div className={`${sprinkles}${userClasses ? userClasses : undefined}`}>
+      {children}
+    </div>
+  )
 }

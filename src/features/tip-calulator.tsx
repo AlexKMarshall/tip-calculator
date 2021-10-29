@@ -230,7 +230,7 @@ export function TipCalculator(props: Props): JSX.Element {
             dispatch({ type: 'dirtyField', target: 'people' })
           }}
         />
-        <Box size="m">
+        <Box padding="m">
           <label>
             <Text>Tip Amount</Text>
             <Text size="xs">/ person</Text>

@@ -1002,6 +1002,11 @@
   resolved "https://registry.yarnpkg.com/@vanilla-extract/recipes/-/recipes-0.2.1.tgz#a3dab757e4c73cf4c42f8fb01cfd81010067ecca"
   integrity sha512-H73oWlFG6Lf1TYBM2zY+z3f9vrNKhGtJKpX53YrUi28xCdsMZq7yucSy8vfKWZu26SFpVYbxncRx0sKGTuCD9A==
 
+"@vanilla-extract/sprinkles@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@vanilla-extract/sprinkles/-/sprinkles-1.3.1.tgz#18de2841327e423ded745c398fe82786e3614b62"
+  integrity sha512-RxD+Thb4ZdrJB/rnfGkZR3jFYj48/oKlK79yIe9MS1+s5L0oC9E6L727PJoHEP+69EMuuCrufdHge4AdPzovxA==
+
 "@vanilla-extract/webpack-plugin@^2.0.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@vanilla-extract/webpack-plugin/-/webpack-plugin-2.1.0.tgz#0a385194289eccdab1a3b487de17a737153e46a2"
@@ -1588,6 +1593,11 @@ cliui@^7.0.2:
     string-width "^4.2.0"
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 co@^4.6.0:
   version "4.6.0"

@@ -24,12 +24,17 @@ const getFluidSpace = (size: TShirtSize) =>
   )
 
 export const spaceThemeTokens = createGlobalTheme(':root', {
-  '2xs': getFluidSpace('2xs'),
-  xs: getFluidSpace('xs'),
-  s: getFluidSpace('s'),
-  m: getFluidSpace('m'),
-  l: getFluidSpace('l'),
-  xl: getFluidSpace('xl'),
-  '2xl': getFluidSpace('2xl'),
-  '3xl': getFluidSpace('3xl'),
+  space: {
+    '2xs': getFluidSpace('2xs'),
+    xs: getFluidSpace('xs'),
+    s: getFluidSpace('s'),
+    m: getFluidSpace('m'),
+    l: getFluidSpace('l'),
+    xl: getFluidSpace('xl'),
+    '2xl': getFluidSpace('2xl'),
+    '3xl': getFluidSpace('3xl'),
+    none: '0',
+  },
 })
+
+export type Space = keyof typeof spaceThemeTokens.space

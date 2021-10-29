@@ -31,7 +31,7 @@ const generateFluidStep = fluidStepFactory(
   scaleFactory({ base: largeBase, scale: largeScale })
 )(fluidFactory())
 
-const typographyScale = createGlobalTheme('html', {
+const typographyScale = createGlobalTheme(':root', {
   xs: generateFluidStep(-1),
   s: generateFluidStep(0),
   m: generateFluidStep(1),
