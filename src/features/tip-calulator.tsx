@@ -1,4 +1,4 @@
-import { Heading, NumberInput, Text } from 'src/components'
+import { Box, Heading, NumberInput, Text } from 'src/components'
 
 import { fontSize } from 'src/styles/typography.css'
 import { useReducer } from 'react'
@@ -230,27 +230,29 @@ export function TipCalculator(props: Props): JSX.Element {
             dispatch({ type: 'dirtyField', target: 'people' })
           }}
         />
-        <label>
-          <Text>Tip Amount</Text>
-          <Text size="xs">/ person</Text>
-          <output className={fontSize({ size: 'xl' })}>
-            {tipPerPerson.toFixed(2)}
-          </output>
-        </label>
-        <label>
-          <Text>Total</Text>
-          <Text size="xs">/ person</Text>
-          <output className={fontSize({ size: 'xl' })}>
-            {totalPerPerson.toFixed(2)}
-          </output>
-        </label>
-        <button
-          type="reset"
-          onClick={() => dispatch({ type: 'reset' })}
-          className={fontSize({ size: 'm' })}
-        >
-          Reset
-        </button>
+        <Box size="m">
+          <label>
+            <Text>Tip Amount</Text>
+            <Text size="xs">/ person</Text>
+            <output className={fontSize({ size: 'xl' })}>
+              {tipPerPerson.toFixed(2)}
+            </output>
+          </label>
+          <label>
+            <Text>Total</Text>
+            <Text size="xs">/ person</Text>
+            <output className={fontSize({ size: 'xl' })}>
+              {totalPerPerson.toFixed(2)}
+            </output>
+          </label>
+          <button
+            type="reset"
+            onClick={() => dispatch({ type: 'reset' })}
+            className={fontSize({ size: 'm' })}
+          >
+            Reset
+          </button>
+        </Box>
       </form>
     </main>
   )
