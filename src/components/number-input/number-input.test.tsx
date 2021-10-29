@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 
 import { NumberInput } from '.'
-import userEvent from '@testing-library/user-event'
 
 it('should have accessible error', () => {
   const label = 'my-field'
