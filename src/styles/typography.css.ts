@@ -31,34 +31,15 @@ const generateFluidStep = fluidStepFactory(
   scaleFactory({ base: largeBase, scale: largeScale })
 )(fluidFactory())
 
-const typographyScale = createGlobalTheme(':root', {
-  xs: generateFluidStep(-1),
-  s: generateFluidStep(0),
-  m: generateFluidStep(1),
-  l: generateFluidStep(2),
-  xl: generateFluidStep(3),
-  '2xl': generateFluidStep(4),
-})
-
-function getFontSize(key: keyof typeof typographyScale) {
-  return {
-    fontSize: typographyScale[key],
-  }
-}
-
-export const fontSize = recipe({
-  base: {
-    fontSize: typographyScale.s,
-  },
-
-  variants: {
+export const typographyThemeTokens = createGlobalTheme(':root', {
+  typography: {
     size: {
-      xs: getFontSize('xs'),
-      s: getFontSize('s'),
-      m: getFontSize('m'),
-      l: getFontSize('l'),
-      xl: getFontSize('xl'),
-      '2xl': getFontSize('2xl'),
+      xs: generateFluidStep(-1),
+      s: generateFluidStep(0),
+      m: generateFluidStep(1),
+      l: generateFluidStep(2),
+      xl: generateFluidStep(3),
+      '2xl': generateFluidStep(4),
     },
   },
 })

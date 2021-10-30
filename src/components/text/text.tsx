@@ -1,6 +1,5 @@
 import { AllHTMLAttributes, ElementType, ReactNode } from 'react'
-
-import { fontSize } from 'src/styles/typography.css'
+import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type AllElementProps = AllHTMLAttributes<HTMLElement>
 
@@ -19,7 +18,7 @@ export function Text({
   const Component = component
 
   return (
-    <Component className={fontSize({ size })} id={id}>
+    <Component className={sprinklesFn({ fontSize: size })} id={id}>
       {children}
     </Component>
   )

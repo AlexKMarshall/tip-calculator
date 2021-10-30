@@ -1,6 +1,13 @@
-import { Box, Center, Heading, NumberInput, Stack, Text } from 'src/components'
+import {
+  Box,
+  Center,
+  Heading,
+  NumberInput,
+  RadioButton,
+  Stack,
+  Text,
+} from 'src/components'
 
-import { fontSize } from 'src/styles/typography.css'
 import { useReducer } from 'react'
 
 const presetTips = [5, 10, 15, 25, 50] as const
@@ -170,23 +177,22 @@ export function TipCalculator(props: Props): JSX.Element {
             <fieldset>
               <legend>Select Tip %</legend>
               {presetTips.map((tipOption) => (
-                <label key={tipOption}>
-                  <input
-                    type="radio"
-                    value={tipOption}
-                    name="tip-percent"
-                    onChange={() => {
-                      dispatch({ type: 'deselectTip', target: 'customTip' })
-                      dispatch({
-                        type: 'updateField',
-                        target: 'presetTip',
-                        value: tipOption,
-                      })
-                    }}
-                    checked={tipOption === presetTip}
-                  />
-                  {tipOption}%
-                </label>
+                <RadioButton
+                  key={tipOption}
+                  id={`${tipOption}`}
+                  value={tipOption}
+                  name="tip-percent"
+                  onChange={() => {
+                    dispatch({ type: 'deselectTip', target: 'customTip' })
+                    dispatch({
+                      type: 'updateField',
+                      target: 'presetTip',
+                      value: tipOption,
+                    })
+                  }}
+                  checked={tipOption === presetTip}
+                  label={`${tipOption}%`}
+                />
               ))}
               <NumberInput
                 label="Custom Tip Amount"
@@ -241,22 +247,14 @@ export function TipCalculator(props: Props): JSX.Element {
               <label>
                 <Text>Tip Amount</Text>
                 <Text size="xs">/ person</Text>
-                <output className={fontSize({ size: 'xl' })}>
-                  {tipPerPerson.toFixed(2)}
-                </output>
+                <output>{tipPerPerson.toFixed(2)}</output>
               </label>
               <label>
                 <Text>Total</Text>
                 <Text size="xs">/ person</Text>
-                <output className={fontSize({ size: 'xl' })}>
-                  {totalPerPerson.toFixed(2)}
-                </output>
+                <output>{totalPerPerson.toFixed(2)}</output>
               </label>
-              <button
-                type="reset"
-                onClick={() => dispatch({ type: 'reset' })}
-                className={fontSize({ size: 'm' })}
-              >
+              <button type="reset" onClick={() => dispatch({ type: 'reset' })}>
                 Reset
               </button>
             </Stack>

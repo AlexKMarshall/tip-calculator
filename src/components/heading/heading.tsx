@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { fontSize } from 'src/styles/typography.css'
+import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 const resolveDefaultComponent = {
   '1': 'h1',
@@ -22,6 +22,6 @@ type Props = {
 }
 export function Heading({ level, component, children }: Props): JSX.Element {
   const Component = component ?? resolveDefaultComponent[level]
-  const size = resolveFontSize[level]
-  return <Component className={fontSize({ size })}>{children}</Component>
+  const fontSize = resolveFontSize[level]
+  return <Component className={sprinklesFn({ fontSize })}>{children}</Component>
 }

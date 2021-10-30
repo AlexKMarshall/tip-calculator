@@ -1,7 +1,6 @@
 import { AllHTMLAttributes, ReactNode } from 'react'
 import { Stack, Text } from 'src/components'
-
-import { fontSize } from 'src/styles/typography.css'
+import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
@@ -32,7 +31,7 @@ export function NumberInput({
 
       {errorMessage ? <Text id={`${id}-error`}>{errorMessage}</Text> : null}
       <input
-        className={fontSize({ size: 'm' })}
+        className={sprinklesFn({ fontSize: 'm' })}
         id={id}
         type="number"
         value={value ?? ''}
