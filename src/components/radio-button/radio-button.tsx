@@ -20,7 +20,7 @@ export function RadioButton({
   id,
 }: Props): JSX.Element {
   return (
-    <>
+    <div>
       <input
         className={styles.input}
         id={id}
@@ -33,6 +33,6 @@ export function RadioButton({
       <label htmlFor={id} className={styles.label}>
         <Text size="m">{label}</Text>
       </label>
-    </>
+    </div>
   )
 }

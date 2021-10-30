@@ -1,6 +1,7 @@
 import {
   Box,
   Center,
+  Grid,
   Heading,
   HiddenVisually,
   NumberInput,
@@ -177,48 +178,50 @@ export function TipCalculator(props: Props): JSX.Element {
             />
             <fieldset>
               <legend>Select Tip %</legend>
-              {presetTips.map((tipOption) => (
-                <RadioButton
-                  key={tipOption}
-                  id={`${tipOption}`}
-                  value={tipOption}
-                  name="tip-percent"
-                  onChange={() => {
-                    dispatch({ type: 'deselectTip', target: 'customTip' })
+              <Grid>
+                {presetTips.map((tipOption) => (
+                  <RadioButton
+                    key={tipOption}
+                    id={`${tipOption}`}
+                    value={tipOption}
+                    name="tip-percent"
+                    onChange={() => {
+                      dispatch({ type: 'deselectTip', target: 'customTip' })
+                      dispatch({
+                        type: 'updateField',
+                        target: 'presetTip',
+                        value: tipOption,
+                      })
+                    }}
+                    checked={tipOption === presetTip}
+                    label={`${tipOption}%`}
+                  />
+                ))}
+                <NumberInput
+                  label={<HiddenVisually>Custom Tip Amount</HiddenVisually>}
+                  id="customTip"
+                  errorMessage={
+                    validity.customTip?.status === 'error'
+                      ? 'Invalid field'
+                      : undefined
+                  }
+                  value={customTip}
+                  onChange={(value) => {
                     dispatch({
                       type: 'updateField',
-                      target: 'presetTip',
-                      value: tipOption,
+                      target: 'customTip',
+                      value,
                     })
                   }}
-                  checked={tipOption === presetTip}
-                  label={`${tipOption}%`}
+                  onBlur={() => {
+                    dispatch({ type: 'validateField', target: 'customTip' })
+                    dispatch({ type: 'dirtyField', target: 'customTip' })
+                  }}
+                  onFocus={() =>
+                    dispatch({ type: 'deselectTip', target: 'presetTip' })
+                  }
                 />
-              ))}
-              <NumberInput
-                label={<HiddenVisually>Custom Tip Amount</HiddenVisually>}
-                id="customTip"
-                errorMessage={
-                  validity.customTip?.status === 'error'
-                    ? 'Invalid field'
-                    : undefined
-                }
-                value={customTip}
-                onChange={(value) => {
-                  dispatch({
-                    type: 'updateField',
-                    target: 'customTip',
-                    value,
-                  })
-                }}
-                onBlur={() => {
-                  dispatch({ type: 'validateField', target: 'customTip' })
-                  dispatch({ type: 'dirtyField', target: 'customTip' })
-                }}
-                onFocus={() =>
-                  dispatch({ type: 'deselectTip', target: 'presetTip' })
-                }
-              />
+              </Grid>
             </fieldset>
             <NumberInput
               label="Number of People"

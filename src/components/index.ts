@@ -1,5 +1,6 @@
 export * from './box'
 export * from './center'
+export * from './grid'
 export * from './heading'
 export * from './hidden-visually'
 export * from './number-input'
