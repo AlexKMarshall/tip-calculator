@@ -35,6 +35,7 @@ export const spaceThemeTokens = createGlobalTheme(':root', {
     '3xl': getFluidSpace('3xl'),
     none: '0',
   },
+  measure: '780px',
 })
 
 export type Space = keyof typeof spaceThemeTokens.space

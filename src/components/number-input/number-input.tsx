@@ -1,6 +1,6 @@
 import { AllHTMLAttributes, ReactNode } from 'react'
+import { Stack, Text } from 'src/components'
 
-import { Text } from 'src/components/text'
 import { fontSize } from 'src/styles/typography.css'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
@@ -25,7 +25,7 @@ export function NumberInput({
   onFocus: onFocusProp,
 }: Props): JSX.Element {
   return (
-    <>
+    <Stack space="2xs">
       <label htmlFor={id}>
         <Text>{label}</Text>
       </label>
@@ -49,6 +49,6 @@ export function NumberInput({
           onFocusProp?.(e)
         }}
       />
-    </>
+    </Stack>
   )
 }
