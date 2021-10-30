@@ -1,6 +1,7 @@
 export * from './box'
 export * from './center'
 export * from './heading'
+export * from './hidden-visually'
 export * from './number-input'
 export * from './radio-button'
 export * from './stack'

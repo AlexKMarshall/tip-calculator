@@ -2,6 +2,7 @@ import {
   Box,
   Center,
   Heading,
+  HiddenVisually,
   NumberInput,
   RadioButton,
   Stack,
@@ -195,7 +196,7 @@ export function TipCalculator(props: Props): JSX.Element {
                 />
               ))}
               <NumberInput
-                label="Custom Tip Amount"
+                label={<HiddenVisually>Custom Tip Amount</HiddenVisually>}
                 id="customTip"
                 errorMessage={
                   validity.customTip?.status === 'error'
