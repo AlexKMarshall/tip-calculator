@@ -5,7 +5,10 @@ import { input } from './number-input.css'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
-type Props = Pick<InputProps, 'min' | 'step' | 'onBlur' | 'onFocus'> & {
+type Props = Pick<
+  InputProps,
+  'min' | 'step' | 'onBlur' | 'onFocus' | 'placeholder'
+> & {
   label: ReactNode
   id: string
   errorMessage?: string
@@ -23,6 +26,7 @@ export function NumberInput({
   onChange,
   onBlur,
   onFocus: onFocusProp,
+  placeholder,
 }: Props): JSX.Element {
   return (
     <Stack space="2xs">
@@ -48,6 +52,7 @@ export function NumberInput({
           e.target.select() // select the field content so we can easily type over it
           onFocusProp?.(e)
         }}
+        placeholder={placeholder}
       />
     </Stack>
   )

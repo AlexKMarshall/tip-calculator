@@ -8,7 +8,7 @@ type Props = {
 }
 export function Center({ component = 'div', children }: Props): JSX.Element {
   return (
-    <Box className={center} component={component}>
+    <Box padding="none" className={center} component={component}>
       {children}
     </Box>
   )

@@ -18,10 +18,20 @@ const resolveFontSize = {
 type Props = {
   level: '1' | '2' | '3' | '4'
   component?: 'h1' | 'h2' | 'h3' | 'h4'
+  textAlign?: 'left' | 'center' | 'right'
   children: ReactNode
 }
-export function Heading({ level, component, children }: Props): JSX.Element {
+export function Heading({
+  level,
+  component,
+  textAlign,
+  children,
+}: Props): JSX.Element {
   const Component = component ?? resolveDefaultComponent[level]
   const fontSize = resolveFontSize[level]
-  return <Component className={sprinklesFn({ fontSize })}>{children}</Component>
+  return (
+    <Component className={sprinklesFn({ fontSize, textAlign })}>
+      {children}
+    </Component>
+  )
 }

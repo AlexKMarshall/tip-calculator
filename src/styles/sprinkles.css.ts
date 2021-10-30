@@ -8,6 +8,7 @@ const properties = defineProperties({
     padding: spaceThemeTokens.space,
     gap: spaceThemeTokens.space,
     fontSize: typographyThemeTokens.typography.size,
+    textAlign: ['left', 'center', 'right'],
   },
 })
 

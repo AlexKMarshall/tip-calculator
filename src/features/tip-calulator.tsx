@@ -150,100 +150,105 @@ export function TipCalculator(props: Props): JSX.Element {
 
   return (
     <Center component="main">
-      <Heading level="3" component="h1">
+      <Heading level="3" component="h1" textAlign="center">
         Splitter
       </Heading>
       <Box>
         <form>
           <Box>
-            <NumberInput
-              label="Bill"
-              id="bill"
-              errorMessage={
-                validity.bill?.status === 'error' ? 'Invalid field' : undefined
-              }
-              value={bill}
-              min="0"
-              onChange={(value) => {
-                dispatch({
-                  type: 'updateField',
-                  target: 'bill',
-                  value,
-                })
-              }}
-              onBlur={() => {
-                dispatch({ type: 'validateField', target: 'bill' })
-                dispatch({ type: 'dirtyField', target: 'bill' })
-              }}
-            />
-            <fieldset>
-              <legend>Select Tip %</legend>
-              <Grid>
-                {presetTips.map((tipOption) => (
-                  <RadioButton
-                    key={tipOption}
-                    id={`${tipOption}`}
-                    value={tipOption}
-                    name="tip-percent"
-                    onChange={() => {
-                      dispatch({ type: 'deselectTip', target: 'customTip' })
+            <Stack space="m">
+              <NumberInput
+                label="Bill"
+                id="bill"
+                errorMessage={
+                  validity.bill?.status === 'error'
+                    ? 'Invalid field'
+                    : undefined
+                }
+                value={bill}
+                min="0"
+                onChange={(value) => {
+                  dispatch({
+                    type: 'updateField',
+                    target: 'bill',
+                    value,
+                  })
+                }}
+                onBlur={() => {
+                  dispatch({ type: 'validateField', target: 'bill' })
+                  dispatch({ type: 'dirtyField', target: 'bill' })
+                }}
+              />
+              <fieldset>
+                <legend>Select Tip %</legend>
+                <Grid>
+                  {presetTips.map((tipOption) => (
+                    <RadioButton
+                      key={tipOption}
+                      id={`${tipOption}`}
+                      value={tipOption}
+                      name="tip-percent"
+                      onChange={() => {
+                        dispatch({ type: 'deselectTip', target: 'customTip' })
+                        dispatch({
+                          type: 'updateField',
+                          target: 'presetTip',
+                          value: tipOption,
+                        })
+                      }}
+                      checked={tipOption === presetTip}
+                      label={`${tipOption}%`}
+                    />
+                  ))}
+                  <NumberInput
+                    label={<HiddenVisually>Custom Tip Amount</HiddenVisually>}
+                    id="customTip"
+                    errorMessage={
+                      validity.customTip?.status === 'error'
+                        ? 'Invalid field'
+                        : undefined
+                    }
+                    value={customTip}
+                    onChange={(value) => {
                       dispatch({
                         type: 'updateField',
-                        target: 'presetTip',
-                        value: tipOption,
+                        target: 'customTip',
+                        value,
                       })
                     }}
-                    checked={tipOption === presetTip}
-                    label={`${tipOption}%`}
+                    onBlur={() => {
+                      dispatch({ type: 'validateField', target: 'customTip' })
+                      dispatch({ type: 'dirtyField', target: 'customTip' })
+                    }}
+                    onFocus={() =>
+                      dispatch({ type: 'deselectTip', target: 'presetTip' })
+                    }
+                    placeholder="Custom"
                   />
-                ))}
-                <NumberInput
-                  label={<HiddenVisually>Custom Tip Amount</HiddenVisually>}
-                  id="customTip"
-                  errorMessage={
-                    validity.customTip?.status === 'error'
-                      ? 'Invalid field'
-                      : undefined
-                  }
-                  value={customTip}
-                  onChange={(value) => {
-                    dispatch({
-                      type: 'updateField',
-                      target: 'customTip',
-                      value,
-                    })
-                  }}
-                  onBlur={() => {
-                    dispatch({ type: 'validateField', target: 'customTip' })
-                    dispatch({ type: 'dirtyField', target: 'customTip' })
-                  }}
-                  onFocus={() =>
-                    dispatch({ type: 'deselectTip', target: 'presetTip' })
-                  }
-                />
-              </Grid>
-            </fieldset>
-            <NumberInput
-              label="Number of People"
-              id="people"
-              errorMessage={
-                validity.people?.status === 'error'
-                  ? 'Invalid field'
-                  : undefined
-              }
-              value={people}
-              onChange={(value) => {
-                dispatch({
-                  type: 'updateField',
-                  target: 'people',
-                  value,
-                })
-              }}
-              onBlur={() => {
-                dispatch({ type: 'validateField', target: 'people' })
-                dispatch({ type: 'dirtyField', target: 'people' })
-              }}
-            />
+                </Grid>
+              </fieldset>
+              <NumberInput
+                label="Number of People"
+                id="people"
+                errorMessage={
+                  validity.people?.status === 'error'
+                    ? 'Invalid field'
+                    : undefined
+                }
+                value={people}
+                onChange={(value) => {
+                  dispatch({
+                    type: 'updateField',
+                    target: 'people',
+                    value,
+                  })
+                }}
+                onBlur={() => {
+                  dispatch({ type: 'validateField', target: 'people' })
+                  dispatch({ type: 'dirtyField', target: 'people' })
+                }}
+              />
+            </Stack>
           </Box>
 
           <Box padding="m">

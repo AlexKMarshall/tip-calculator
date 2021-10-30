@@ -9,4 +9,6 @@ export const input = style({
 export const label = style({
   display: 'inline-block',
   padding: spaceThemeTokens.space['xs'],
+  lineHeight: 1,
+  textAlign: 'center',
 })

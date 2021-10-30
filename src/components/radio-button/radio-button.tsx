@@ -1,5 +1,5 @@
 import { AllHTMLAttributes } from 'react'
-import { Text } from '..'
+import { hiddenVisually, Text } from '..'
 import * as styles from './radio-button.css'
 
 type Props = Pick<
@@ -20,9 +20,9 @@ export function RadioButton({
   id,
 }: Props): JSX.Element {
   return (
-    <div>
+    <>
       <input
-        className={styles.input}
+        className={hiddenVisually}
         id={id}
         type="radio"
         value={value}
@@ -33,6 +33,6 @@ export function RadioButton({
       <label htmlFor={id} className={styles.label}>
         <Text size="m">{label}</Text>
       </label>
-    </div>
+    </>
   )
 }
