@@ -1,4 +1,5 @@
 export * from './box'
+export * from './button'
 export * from './center'
 export * from './grid'
 export * from './heading'

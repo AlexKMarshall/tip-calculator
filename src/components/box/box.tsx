@@ -3,22 +3,31 @@ import clsx, { ClassValue } from 'clsx'
 
 import { Space } from 'src/styles/space.css'
 import { sprinklesFn } from 'src/styles/sprinkles.css'
+import { colorThemeTokens } from 'src/styles/color.css'
 
-type Props = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
+export type BoxProps = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
   children: ReactNode
   padding?: Space
+  paddingInline?: Space
+  background?: keyof typeof colorThemeTokens.background
   className?: ClassValue
   component?: ElementType
 }
 export function Box({
   padding = 's',
+  paddingInline,
+  background,
   className,
   children,
   component = 'div',
   ...props
-}: Props): JSX.Element {
+}: BoxProps): JSX.Element {
   const userClasses = clsx(className)
-  const sprinkles = sprinklesFn({ padding })
+  const sprinkles = sprinklesFn({
+    padding,
+    paddingInline,
+    backgroundColor: background,
+  })
   const Component = component
 
   return (
