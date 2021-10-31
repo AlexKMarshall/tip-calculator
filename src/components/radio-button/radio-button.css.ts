@@ -13,17 +13,21 @@ export const label = style({
   lineHeight: 1,
   textAlign: 'center',
   backgroundColor: colorThemeTokens.background.accent,
+  color: colorThemeTokens.text.dark.neutral,
 
   ':hover': {
     backgroundColor: colorThemeTokens.background.accentHover,
+    color: colorThemeTokens.text.light.neutral,
   },
 
   selectors: {
     'input:checked + &': {
       backgroundColor: colorThemeTokens.background.accentActive,
+      color: colorThemeTokens.text.light.neutral,
     },
     'input:focus-visible + &': {
       backgroundColor: colorThemeTokens.background.accentHover,
+      color: colorThemeTokens.text.light.neutral,
     },
   },
 })

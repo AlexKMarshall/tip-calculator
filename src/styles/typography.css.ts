@@ -1,7 +1,8 @@
 import { defaultConfig, fluidFactory } from './utils'
 
-import { createGlobalTheme } from '@vanilla-extract/css'
+import { createGlobalTheme, styleVariants } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
+import { colorThemeTokens } from './color.css'
 
 /* ------- Factory functions  ---------*/
 
@@ -43,3 +44,14 @@ export const typographyThemeTokens = createGlobalTheme(':root', {
     },
   },
 })
+
+export const invertableTone = {
+  neutral: styleVariants({
+    light: {
+      color: colorThemeTokens.text.light.neutral,
+    },
+    dark: {
+      color: colorThemeTokens.text.dark.neutral,
+    },
+  }),
+}

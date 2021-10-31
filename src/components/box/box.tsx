@@ -1,15 +1,46 @@
-import { AllHTMLAttributes, ElementType, ReactNode } from 'react'
+import {
+  AllHTMLAttributes,
+  createContext,
+  ElementType,
+  ReactNode,
+  useContext,
+} from 'react'
 import clsx, { ClassValue } from 'clsx'
 
 import { Space } from 'src/styles/space.css'
 import { sprinklesFn } from 'src/styles/sprinkles.css'
-import { colorThemeTokens } from 'src/styles/color.css'
+import { colorThemeTokens, resolveBackgroundTone } from 'src/styles/color.css'
+import { invertableTone } from 'src/styles/typography.css'
+
+type ValidBackground = keyof typeof colorThemeTokens.background
+
+const BackgroundContext = createContext<ValidBackground | undefined>(undefined)
+BackgroundContext.displayName = 'BackgroundContext'
+
+export function useBackground() {
+  // not currently throwing if undefined as top level box won't have context
+  // but maybe we put the body into context
+  return useContext(BackgroundContext)
+}
+
+function renderBackgroundProvider(
+  background: ValidBackground | undefined,
+  children: ReactNode | null
+) {
+  return background ? (
+    <BackgroundContext.Provider value={background}>
+      {children}
+    </BackgroundContext.Provider>
+  ) : (
+    <>{children}</>
+  )
+}
 
 export type BoxProps = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
   children: ReactNode
   padding?: Space
   paddingInline?: Space
-  background?: keyof typeof colorThemeTokens.background
+  background?: ValidBackground
   className?: ClassValue
   component?: ElementType
 }
@@ -29,9 +60,17 @@ export function Box({
     backgroundColor: background,
   })
   const Component = component
+  const tone = 'neutral'
 
-  return (
-    <Component className={clsx(userClasses, sprinkles)} {...props}>
+  let colorClass: string = ''
+  if (background) {
+    const backgroundTone = resolveBackgroundTone[background]
+    colorClass = invertableTone[tone][backgroundTone]
+  }
+
+  return renderBackgroundProvider(
+    background,
+    <Component className={clsx(userClasses, colorClass, sprinkles)} {...props}>
       {children}
     </Component>
   )
