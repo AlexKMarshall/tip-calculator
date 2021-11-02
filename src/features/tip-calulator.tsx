@@ -2,12 +2,15 @@ import {
   Box,
   Button,
   Center,
+  Cluster,
+  Cover,
   Grid,
   Heading,
   HiddenVisually,
   NumberInput,
   RadioButton,
   Stack,
+  Switcher,
   Text,
 } from 'src/components'
 
@@ -150,13 +153,13 @@ export function TipCalculator(props: Props): JSX.Element {
     : 0
 
   return (
-    <Center component="main">
-      <Stack space="l">
+    <Center component="main" gutter="xl">
+      <Cover space="l">
         <Heading level="3" component="h1" textAlign="center">
           Splitter
         </Heading>
         <Box background="card">
-          <form>
+          <Switcher component="form">
             <Box>
               <Stack space="m">
                 <NumberInput
@@ -255,16 +258,24 @@ export function TipCalculator(props: Props): JSX.Element {
 
             <Box padding="m" background="accent">
               <Stack>
-                <label>
-                  <Text>Tip Amount</Text>
-                  <Text size="xs">/ person</Text>
-                  <output>{tipPerPerson.toFixed(2)}</output>
-                </label>
-                <label>
-                  <Text>Total</Text>
-                  <Text size="xs">/ person</Text>
-                  <output>{totalPerPerson.toFixed(2)}</output>
-                </label>
+                <Cluster justify="space-between" space="s">
+                  <Stack component="label" space="2xs" htmlFor="tip-amount">
+                    <Text>Tip Amount</Text>
+                    <Text size="xs">/ person</Text>
+                  </Stack>
+                  <Text size="xl" component="output" id="tip-amount">
+                    ${tipPerPerson.toFixed(2)}
+                  </Text>
+                </Cluster>
+                <Cluster justify="space-between" space="s">
+                  <Stack component="label" htmlFor="total-amount" space="2xs">
+                    <Text>Total</Text>
+                    <Text size="xs">/ person</Text>
+                  </Stack>
+                  <Text size="xl" component="output" id="total-amount">
+                    ${totalPerPerson.toFixed(2)}
+                  </Text>
+                </Cluster>
                 <Button
                   type="reset"
                   onClick={() => dispatch({ type: 'reset' })}
@@ -273,9 +284,9 @@ export function TipCalculator(props: Props): JSX.Element {
                 </Button>
               </Stack>
             </Box>
-          </form>
+          </Switcher>
         </Box>
-      </Stack>
+      </Cover>
     </Center>
   )
 }

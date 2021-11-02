@@ -1,7 +1,8 @@
 import { AllHTMLAttributes, ReactNode } from 'react'
-import { Stack, Text } from 'src/components'
-import { sprinklesFn } from 'src/styles/sprinkles.css'
+import { Cluster, Stack, Text } from 'src/components'
+
 import { input } from './number-input.css'
+import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
@@ -30,11 +31,13 @@ export function NumberInput({
 }: Props): JSX.Element {
   return (
     <Stack space="2xs">
-      <label htmlFor={id}>
-        <Text>{label}</Text>
-      </label>
+      <Cluster justify="space-between">
+        <label htmlFor={id}>
+          <Text>{label}</Text>
+        </label>
 
-      {errorMessage ? <Text id={`${id}-error`}>{errorMessage}</Text> : null}
+        {errorMessage ? <Text id={`${id}-error`}>{errorMessage}</Text> : null}
+      </Cluster>
       <input
         className={input}
         id={id}

@@ -19,10 +19,10 @@ it('should calculate a tip', () => {
 
   expect(
     screen.getByRole('status', { name: /tip amount \/ person/i })
-  ).toHaveValue(expectedTipPerPerson.toFixed(2))
+  ).toHaveValue(`$${expectedTipPerPerson.toFixed(2)}`)
 
   expect(screen.getByRole('status', { name: /total \/ person/i })).toHaveValue(
-    expectedTotalPerPerson.toFixed(2)
+    `$${expectedTotalPerPerson.toFixed(2)}`
   )
 })
 
@@ -45,10 +45,10 @@ it('should calculate a custom tip', () => {
 
   expect(
     screen.getByRole('status', { name: /tip amount \/ person/i })
-  ).toHaveValue(expectedTipPerPerson.toFixed(2))
+  ).toHaveValue(`$${expectedTipPerPerson.toFixed(2)}`)
 
   expect(screen.getByRole('status', { name: /total \/ person/i })).toHaveValue(
-    expectedTotalPerPerson.toFixed(2)
+    `$${expectedTotalPerPerson.toFixed(2)}`
   )
 })
 it('should not calculate when values are invalid', () => {
@@ -67,9 +67,9 @@ it('should not calculate when values are invalid', () => {
   // We haven't filled in other fields, so it shouldn't calculate the totals
   expect(
     screen.getByRole('status', { name: /tip amount \/ person/i })
-  ).toHaveValue((0).toFixed(2))
+  ).toHaveValue(`$${(0).toFixed(2)}`)
   expect(screen.getByRole('status', { name: /total \/ person/i })).toHaveValue(
-    (0).toFixed(2)
+    `$${(0).toFixed(2)}`
   )
 
   const peopleField = screen.getByLabelText(/people/i)

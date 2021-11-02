@@ -1,6 +1,8 @@
 import { Box, BoxProps } from 'src/components'
+
 import { ReactNode } from 'react'
 import { center } from './center.css'
+import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type Props = {
   children: ReactNode
@@ -14,10 +16,13 @@ export function Center({
   gutter = 'none',
   intrinsic,
 }: Props): JSX.Element {
+  const sprinkles = sprinklesFn({ paddingInline: { s: gutter } })
+
   return (
     <Box
-      paddingInline={gutter}
-      className={center({ intrinsic })}
+      padding="none"
+      // paddingInline={gutter}
+      className={[center({ intrinsic }), sprinkles]}
       component={component}
     >
       {children}

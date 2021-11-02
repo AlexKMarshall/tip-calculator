@@ -1,16 +1,16 @@
 import {
   AllHTMLAttributes,
-  createContext,
   ElementType,
   ReactNode,
+  createContext,
   useContext,
 } from 'react'
 import clsx, { ClassValue } from 'clsx'
+import { colorThemeTokens, resolveBackgroundTone } from 'src/styles/color.css'
 
 import { Space } from 'src/styles/space.css'
-import { sprinklesFn } from 'src/styles/sprinkles.css'
-import { colorThemeTokens, resolveBackgroundTone } from 'src/styles/color.css'
 import { invertableTone } from 'src/styles/typography.css'
+import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type ValidBackground = keyof typeof colorThemeTokens.background
 
@@ -40,6 +40,7 @@ export type BoxProps = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
   children: ReactNode
   padding?: Space
   paddingInline?: Space
+  paddingTop?: Space
   background?: ValidBackground
   className?: ClassValue
   component?: ElementType
@@ -47,6 +48,7 @@ export type BoxProps = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
 export function Box({
   padding = 's',
   paddingInline,
+  paddingTop,
   background,
   className,
   children,
@@ -57,6 +59,7 @@ export function Box({
   const sprinkles = sprinklesFn({
     padding,
     paddingInline,
+    paddingTop,
     backgroundColor: background,
   })
   const Component = component

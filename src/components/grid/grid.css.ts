@@ -1,5 +1,5 @@
-import { style } from '@vanilla-extract/css'
 import { spaceThemeTokens } from 'src/styles/space.css'
+import { style } from '@vanilla-extract/css'
 
 export const grid = style({
   display: 'grid',

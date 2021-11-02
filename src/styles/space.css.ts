@@ -35,7 +35,17 @@ export const spaceThemeTokens = createGlobalTheme(':root', {
     '3xl': getFluidSpace('3xl'),
     none: '0',
   },
-  measure: '780px',
+  measure: '70ch',
 })
 
 export type Space = keyof typeof spaceThemeTokens.space
+
+export const screenSizes = {
+  s: 640,
+  m: 768,
+}
+
+export const resolveScreenMQ = {
+  s: `screen and (min-width: ${screenSizes.s}px)`,
+  m: `screen and (min-width: ${screenSizes.m}px)`,
+}
