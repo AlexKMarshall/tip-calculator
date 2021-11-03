@@ -226,6 +226,7 @@ export function TipCalculator(props: Props): JSX.Element {
                           ? 'Invalid field'
                           : undefined
                       }
+                      min={0}
                       value={customTip}
                       onChange={(value) => {
                         dispatch({

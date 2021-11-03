@@ -40,7 +40,11 @@ export function NumberInput({
           <Text>{label}</Text>
         </label>
 
-        {errorMessage ? <Text id={`${id}-error`}>{errorMessage}</Text> : null}
+        {errorMessage ? (
+          <Text id={`${id}-error`} tone="critical">
+            {errorMessage}
+          </Text>
+        ) : null}
       </Cluster>
       <div className={styles.wrapper}>
         {icon ? <div className={styles.icon}>{icon}</div> : null}

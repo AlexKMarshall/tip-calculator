@@ -22,7 +22,7 @@ export const colorThemeTokens = createGlobalTheme(':root', {
   },
   tone: {
     brand: 'hsl(172, 67%, 45%)',
-    critical: 'hsl(15, 32%, 57%)',
+    critical: 'hsl(15, 50%, 57%)',
   },
 })
 
