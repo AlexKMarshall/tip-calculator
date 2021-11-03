@@ -47,6 +47,7 @@ export type BoxProps = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
   borderTopRadius?: ResponsiveValue<ValidBorderRadius>
   borderBottomRadius?: ResponsiveValue<ValidBorderRadius>
   display?: 'block' | 'flex' | 'grid'
+  alignItems?: 'center' | 'baseline'
   className?: ClassValue
   component?: ElementType
 }
@@ -61,6 +62,7 @@ export function Box({
   display,
   className,
   children,
+  alignItems,
   component = 'div',
   ...props
 }: BoxProps): JSX.Element {
@@ -74,6 +76,7 @@ export function Box({
     borderTopRadius,
     borderBottomRadius,
     display,
+    alignItems,
   })
   const Component = component
   const tone = 'neutral'

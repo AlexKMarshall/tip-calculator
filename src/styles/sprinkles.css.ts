@@ -23,6 +23,7 @@ const properties = defineProperties({
     gap: spaceThemeTokens.space,
     fontSize: typographyThemeTokens.typography.size,
     textAlign: ['left', 'center', 'right'],
+    alignItems: ['center', 'baseline'],
     justifyContent: ['flex-start', 'flex-end', 'space-between'],
     display: ['block', 'grid', 'flex'],
     backgroundColor: colorThemeTokens.background,

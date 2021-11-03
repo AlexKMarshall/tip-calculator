@@ -1,8 +1,8 @@
+import { createGlobalTheme, styleVariants } from '@vanilla-extract/css'
 import { defaultConfig, fluidFactory } from './utils'
 
-import { createGlobalTheme, styleVariants } from '@vanilla-extract/css'
-import { recipe } from '@vanilla-extract/recipes'
 import { colorThemeTokens } from './color.css'
+import { recipe } from '@vanilla-extract/recipes'
 
 /* ------- Factory functions  ---------*/
 
@@ -42,6 +42,10 @@ export const typographyThemeTokens = createGlobalTheme(':root', {
       xl: generateFluidStep(3),
       '2xl': generateFluidStep(4),
     },
+    weight: {
+      regular: '500',
+      strong: '700',
+    },
   },
 })
 
@@ -52,6 +56,14 @@ export const invertableTone = {
     },
     dark: {
       color: colorThemeTokens.text.dark.neutral,
+    },
+  }),
+  secondary: styleVariants({
+    light: {
+      color: colorThemeTokens.text.light.secondary,
+    },
+    dark: {
+      color: colorThemeTokens.text.dark.secondary,
     },
   }),
 }

@@ -35,19 +35,25 @@ export function NumberInput({
 }: Props): JSX.Element {
   return (
     <Stack space="2xs">
-      <Cluster justify="space-between">
+      <Cluster justify="space-between" align="baseline">
         <label htmlFor={id}>
-          <Text>{label}</Text>
+          <Text size="xs" weight="strong" tone="secondary">
+            {label}
+          </Text>
         </label>
 
         {errorMessage ? (
-          <Text id={`${id}-error`} tone="critical">
+          <Text id={`${id}-error`} tone="critical" size="xs" weight="strong">
             {errorMessage}
           </Text>
         ) : null}
       </Cluster>
       <div className={styles.wrapper}>
-        {icon ? <div className={styles.icon}>{icon}</div> : null}
+        {icon ? (
+          <div className={styles.icon} aria-hidden>
+            {icon}
+          </div>
+        ) : null}
         <input
           className={styles.input({ icon: Boolean(icon) })}
           id={id}

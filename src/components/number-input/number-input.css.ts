@@ -27,6 +27,8 @@ export const input = recipe({
     width: '100%',
     textAlign: 'right',
     border: 'none',
+    color: 'inherit',
+    fontWeight: typographyThemeTokens.typography.weight.strong,
     caretColor: colorThemeTokens.tone.brand,
 
     ':focus-visible': {
@@ -58,4 +60,6 @@ export const icon = style({
   width: '0.75em',
   left: padding,
   transform: 'translateY(-50%)',
+  color: colorThemeTokens.text.light.secondary,
+  opacity: '0.7',
 })
