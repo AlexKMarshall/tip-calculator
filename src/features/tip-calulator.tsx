@@ -14,6 +14,7 @@ import {
   Text,
 } from 'src/components'
 
+import { heading } from './tip-calculator.css'
 import { useReducer } from 'react'
 
 const presetTips = [5, 10, 15, 25, 50] as const
@@ -156,12 +157,17 @@ export function TipCalculator(props: Props): JSX.Element {
     <Center component="main" gutter="xl">
       <Cover space="l">
         <Heading level="3" component="h1" textAlign="center">
-          Splitter
+          <HiddenVisually>Splitter</HiddenVisually>
+          <span className={heading} aria-hidden>
+            Spli
+            <br />
+            tter
+          </span>
         </Heading>
         <Box
           background="card"
           borderTopRadius="xl"
-          borderBottomRadius={{ m: 'xl' }}
+          borderBottomRadius={{ s: 'xl' }}
         >
           <Switcher component="form">
             <Box>
