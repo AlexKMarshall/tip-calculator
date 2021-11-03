@@ -266,8 +266,13 @@ export function TipCalculator(props: Props): JSX.Element {
               </Stack>
             </Box>
 
-            <Box padding="m" background="accent" borderRadius="l">
-              <Stack>
+            <Box
+              padding="m"
+              background="accent"
+              borderRadius="l"
+              display="grid"
+            >
+              <Stack split>
                 <Cluster justify="space-between" space="s">
                   <Stack component="label" space="2xs" htmlFor="tip-amount">
                     <Text>Tip Amount</Text>

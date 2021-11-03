@@ -24,6 +24,7 @@ const properties = defineProperties({
     fontSize: typographyThemeTokens.typography.size,
     textAlign: ['left', 'center', 'right'],
     justifyContent: ['flex-start', 'flex-end', 'space-between'],
+    display: ['block', 'grid', 'flex'],
     backgroundColor: colorThemeTokens.background,
     borderTopLeftRadius: spaceThemeTokens.borderRadius,
     borderTopRightRadius: spaceThemeTokens.borderRadius,
