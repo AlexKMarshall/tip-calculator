@@ -20,6 +20,10 @@ export const colorThemeTokens = createGlobalTheme(':root', {
       secondary: 'hsl(184, 14%, 56%)',
     },
   },
+  tone: {
+    brand: 'hsl(172, 67%, 45%)',
+    critical: 'hsl(15, 32%, 57%)',
+  },
 })
 
 export const resolveBackgroundTone: Record<

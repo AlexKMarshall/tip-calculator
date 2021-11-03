@@ -27,6 +27,19 @@ export const input = recipe({
     width: '100%',
     textAlign: 'right',
     border: 'none',
+    caretColor: colorThemeTokens.tone.brand,
+
+    ':focus-visible': {
+      outline: '1px solid transparent',
+      boxShadow: `0 0 0 2px ${colorThemeTokens.tone.brand}`,
+    },
+
+    selectors: {
+      '&[aria-invalid=true]': {
+        outline: '1px solid transparent',
+        boxShadow: `0 0 0 2px ${colorThemeTokens.tone.critical}`,
+      },
+    },
   },
 
   variants: {
