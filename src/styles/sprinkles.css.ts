@@ -1,4 +1,8 @@
-import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
+import {
+  ConditionalValue,
+  createSprinkles,
+  defineProperties,
+} from '@vanilla-extract/sprinkles'
 import { resolveScreenMQ, screenSizes, spaceThemeTokens } from './space.css'
 
 import { colorThemeTokens } from './color.css'
@@ -21,7 +25,26 @@ const properties = defineProperties({
     textAlign: ['left', 'center', 'right'],
     justifyContent: ['flex-start', 'flex-end', 'space-between'],
     backgroundColor: colorThemeTokens.background,
+    borderTopLeftRadius: spaceThemeTokens.borderRadius,
+    borderTopRightRadius: spaceThemeTokens.borderRadius,
+    borderBottomRightRadius: spaceThemeTokens.borderRadius,
+    borderBottomLeftRadius: spaceThemeTokens.borderRadius,
+  },
+  shorthands: {
+    borderTopRadius: ['borderTopLeftRadius', 'borderTopRightRadius'],
+    borderBottomRadius: ['borderBottomLeftRadius', 'borderBottomRightRadius'],
+    borderRadius: [
+      'borderTopLeftRadius',
+      'borderTopRightRadius',
+      'borderBottomLeftRadius',
+      'borderBottomRightRadius',
+    ],
   },
 })
 
 export const sprinklesFn = createSprinkles(properties)
+
+export type ResponsiveValue<Value extends string | number> = ConditionalValue<
+  typeof properties,
+  Value
+>

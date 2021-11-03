@@ -5,14 +5,15 @@ import {
   createContext,
   useContext,
 } from 'react'
+import { ResponsiveValue, sprinklesFn } from 'src/styles/sprinkles.css'
+import { Space, spaceThemeTokens } from 'src/styles/space.css'
 import clsx, { ClassValue } from 'clsx'
 import { colorThemeTokens, resolveBackgroundTone } from 'src/styles/color.css'
 
-import { Space } from 'src/styles/space.css'
 import { invertableTone } from 'src/styles/typography.css'
-import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type ValidBackground = keyof typeof colorThemeTokens.background
+type ValidBorderRadius = keyof typeof spaceThemeTokens.borderRadius
 
 const BackgroundContext = createContext<ValidBackground | undefined>(undefined)
 BackgroundContext.displayName = 'BackgroundContext'
@@ -42,6 +43,9 @@ export type BoxProps = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
   paddingInline?: Space
   paddingTop?: Space
   background?: ValidBackground
+  borderRadius?: ResponsiveValue<ValidBorderRadius>
+  borderTopRadius?: ResponsiveValue<ValidBorderRadius>
+  borderBottomRadius?: ResponsiveValue<ValidBorderRadius>
   className?: ClassValue
   component?: ElementType
 }
@@ -50,6 +54,9 @@ export function Box({
   paddingInline,
   paddingTop,
   background,
+  borderRadius,
+  borderTopRadius,
+  borderBottomRadius,
   className,
   children,
   component = 'div',
@@ -61,6 +68,9 @@ export function Box({
     paddingInline,
     paddingTop,
     backgroundColor: background,
+    borderRadius,
+    borderTopRadius,
+    borderBottomRadius,
   })
   const Component = component
   const tone = 'neutral'

@@ -158,7 +158,11 @@ export function TipCalculator(props: Props): JSX.Element {
         <Heading level="3" component="h1" textAlign="center">
           Splitter
         </Heading>
-        <Box background="card">
+        <Box
+          background="card"
+          borderTopRadius="xl"
+          borderBottomRadius={{ m: 'xl' }}
+        >
           <Switcher component="form">
             <Box>
               <Stack space="m">
@@ -256,7 +260,7 @@ export function TipCalculator(props: Props): JSX.Element {
               </Stack>
             </Box>
 
-            <Box padding="m" background="accent">
+            <Box padding="m" background="accent" borderRadius="l">
               <Stack>
                 <Cluster justify="space-between" space="s">
                   <Stack component="label" space="2xs" htmlFor="tip-amount">

@@ -36,6 +36,16 @@ export const spaceThemeTokens = createGlobalTheme(':root', {
     none: '0',
   },
   measure: '70ch',
+  borderRadius: {
+    none: '0px',
+    xs: '2px',
+    s: '4px',
+    m: '8px',
+    l: '16px',
+    xl: '24px',
+    full: '999px',
+    circle: '50%',
+  },
 })
 
 export type Space = keyof typeof spaceThemeTokens.space

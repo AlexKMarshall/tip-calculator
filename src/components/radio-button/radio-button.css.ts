@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css'
 import { colorThemeTokens } from 'src/styles/color.css'
 import { spaceThemeTokens } from 'src/styles/space.css'
+import { style } from '@vanilla-extract/css'
 import { typographyThemeTokens } from 'src/styles/typography.css'
 
 export const input = style({
@@ -13,6 +13,7 @@ export const label = style({
   lineHeight: 1,
   textAlign: 'center',
   backgroundColor: colorThemeTokens.background.accent,
+  borderRadius: spaceThemeTokens.borderRadius.s,
   color: colorThemeTokens.text.dark.neutral,
 
   ':hover': {
