@@ -1,7 +1,9 @@
+import * as styles from './number-input.css'
+
 import { AllHTMLAttributes, ReactNode } from 'react'
 import { Cluster, Stack, Text } from 'src/components'
 
-import { input } from './number-input.css'
+import { Dollar } from '../icons/dollar'
 import { sprinklesFn } from 'src/styles/sprinkles.css'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
@@ -15,6 +17,7 @@ type Props = Pick<
   errorMessage?: string
   value: number | null
   onChange: (value: number) => void
+  icon?: ReactNode
 }
 
 export function NumberInput({
@@ -28,6 +31,7 @@ export function NumberInput({
   onBlur,
   onFocus: onFocusProp,
   placeholder,
+  icon,
 }: Props): JSX.Element {
   return (
     <Stack space="2xs">
@@ -38,25 +42,28 @@ export function NumberInput({
 
         {errorMessage ? <Text id={`${id}-error`}>{errorMessage}</Text> : null}
       </Cluster>
-      <input
-        className={input}
-        id={id}
-        type="number"
-        value={value ?? ''}
-        min={min}
-        step={step}
-        aria-invalid={Boolean(errorMessage)}
-        aria-describedby={errorMessage ? `${id}-error` : undefined}
-        onChange={(e) => {
-          onChange(e.target.valueAsNumber)
-        }}
-        onBlur={onBlur}
-        onFocus={(e) => {
-          e.target.select() // select the field content so we can easily type over it
-          onFocusProp?.(e)
-        }}
-        placeholder={placeholder}
-      />
+      <div className={styles.wrapper}>
+        {icon ? <div className={styles.icon}>{icon}</div> : null}
+        <input
+          className={styles.input({ icon: Boolean(icon) })}
+          id={id}
+          type="number"
+          value={value ?? ''}
+          min={min}
+          step={step}
+          aria-invalid={Boolean(errorMessage)}
+          aria-describedby={errorMessage ? `${id}-error` : undefined}
+          onChange={(e) => {
+            onChange(e.target.valueAsNumber)
+          }}
+          onBlur={onBlur}
+          onFocus={(e) => {
+            e.target.select() // select the field content so we can easily type over it
+            onFocusProp?.(e)
+          }}
+          placeholder={placeholder}
+        />
+      </div>
     </Stack>
   )
 }

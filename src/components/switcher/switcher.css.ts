@@ -1,7 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css'
 
 import { calc } from '@vanilla-extract/css-utils'
-import { spaceThemeTokens } from 'src/styles/space.css'
 
 export const switcher = style({
   display: 'flex',

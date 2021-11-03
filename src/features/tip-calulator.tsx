@@ -14,6 +14,8 @@ import {
   Text,
 } from 'src/components'
 
+import { Dollar } from 'src/components/icons/dollar'
+import { Person } from 'src/components/icons/person'
 import { heading } from './tip-calculator.css'
 import { useReducer } from 'react'
 
@@ -193,6 +195,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     dispatch({ type: 'validateField', target: 'bill' })
                     dispatch({ type: 'dirtyField', target: 'bill' })
                   }}
+                  icon={<Dollar />}
                 />
                 <fieldset>
                   <legend>Select Tip %</legend>
@@ -262,6 +265,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     dispatch({ type: 'validateField', target: 'people' })
                     dispatch({ type: 'dirtyField', target: 'people' })
                   }}
+                  icon={<Person />}
                 />
               </Stack>
             </Box>
