@@ -54,6 +54,10 @@ export const input = recipe({
   },
 })
 
+export const formattedInput = style({
+  paddingInlineEnd: spaceThemeTokens.space.s,
+})
+
 export const icon = style({
   position: 'absolute',
   top: '50%',

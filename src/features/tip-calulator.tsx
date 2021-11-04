@@ -134,6 +134,18 @@ function formReducer<T extends keyof FormState['values']>(
   }
 }
 
+function formatCurrency(value: number) {
+  const { minimumFractionDigits, maximumFractionDigits } =
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).resolvedOptions()
+  return value.toLocaleString('en-US', {
+    minimumFractionDigits,
+    maximumFractionDigits,
+  })
+}
+
 type Props = {}
 export function TipCalculator(props: Props): JSX.Element {
   const [formState, dispatch] = useReducer(formReducer, initialFormState)
@@ -196,6 +208,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     dispatch({ type: 'dirtyField', target: 'bill' })
                   }}
                   icon={<Dollar />}
+                  formatter={formatCurrency}
                 />
                 <fieldset>
                   <legend>Select Tip %</legend>
