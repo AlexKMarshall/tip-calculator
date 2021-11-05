@@ -19,7 +19,6 @@ import {
 import { Dollar } from 'src/components/icons/dollar'
 import { Person } from 'src/components/icons/person'
 import { heading } from './tip-calculator.css'
-import { useForm } from 'react-hook-form'
 import { useReducer } from 'react'
 
 const presetTips = [5, 10, 15, 25, 50] as const
@@ -149,22 +148,8 @@ function formatCurrency(value: number) {
   })
 }
 
-type FormData = {
-  bill: number | null
-  customTip: number | null
-  people: number | null
-}
-
 type Props = {}
 export function TipCalculator(props: Props): JSX.Element {
-  const { control } = useForm<FormData>({
-    defaultValues: {
-      bill: 0,
-      customTip: null,
-      people: 0,
-    },
-  })
-
   const [formState, dispatch] = useReducer(formReducer, initialFormState)
 
   const {
@@ -204,28 +189,26 @@ export function TipCalculator(props: Props): JSX.Element {
             <Box>
               <Stack space="m">
                 <NumberField
-                  name="bill"
                   label="Bill"
                   id="bill"
-                  control={control}
-                  // errorMessage={
-                  //   validity.bill?.status === 'error'
-                  //     ? 'Invalid field'
-                  //     : undefined
-                  // }
-                  // value={bill}
+                  errorMessage={
+                    validity.bill?.status === 'error'
+                      ? 'Invalid field'
+                      : undefined
+                  }
+                  value={bill}
                   min="0"
-                  // onChange={(value) => {
-                  //   dispatch({
-                  //     type: 'updateField',
-                  //     target: 'bill',
-                  //     value,
-                  //   })
-                  // }}
-                  // onBlur={() => {
-                  //   dispatch({ type: 'validateField', target: 'bill' })
-                  //   dispatch({ type: 'dirtyField', target: 'bill' })
-                  // }}
+                  onChange={(value) => {
+                    dispatch({
+                      type: 'updateField',
+                      target: 'bill',
+                      value,
+                    })
+                  }}
+                  onBlur={() => {
+                    dispatch({ type: 'validateField', target: 'bill' })
+                    dispatch({ type: 'dirtyField', target: 'bill' })
+                  }}
                   icon={<Dollar />}
                   formatter={formatCurrency}
                 />
@@ -252,23 +235,21 @@ export function TipCalculator(props: Props): JSX.Element {
                     <NumberInput
                       id="customTip"
                       min={0}
-                      name="customTip"
-                      control={control}
-                      // value={customTip}
-                      // onChange={(value) => {
-                      //   dispatch({
-                      //     type: 'updateField',
-                      //     target: 'customTip',
-                      //     value,
-                      //   })
-                      // }}
-                      // onBlur={() => {
-                      //   dispatch({ type: 'validateField', target: 'customTip' })
-                      //   dispatch({ type: 'dirtyField', target: 'customTip' })
-                      // }}
-                      // onFocus={() =>
-                      //   dispatch({ type: 'deselectTip', target: 'presetTip' })
-                      // }
+                      value={customTip}
+                      onChange={(value) => {
+                        dispatch({
+                          type: 'updateField',
+                          target: 'customTip',
+                          value,
+                        })
+                      }}
+                      onBlur={() => {
+                        dispatch({ type: 'validateField', target: 'customTip' })
+                        dispatch({ type: 'dirtyField', target: 'customTip' })
+                      }}
+                      onFocus={() =>
+                        dispatch({ type: 'deselectTip', target: 'presetTip' })
+                      }
                       placeholder="Custom"
                     />
                   </Grid>
@@ -276,25 +257,23 @@ export function TipCalculator(props: Props): JSX.Element {
                 <NumberField
                   label="Number of People"
                   id="people"
-                  name="people"
-                  control={control}
-                  // errorMessage={
-                  //   validity.people?.status === 'error'
-                  //     ? 'Invalid field'
-                  //     : undefined
-                  // }
-                  // value={people}
-                  // onChange={(value) => {
-                  //   dispatch({
-                  //     type: 'updateField',
-                  //     target: 'people',
-                  //     value,
-                  //   })
-                  // }}
-                  // onBlur={() => {
-                  //   dispatch({ type: 'validateField', target: 'people' })
-                  //   dispatch({ type: 'dirtyField', target: 'people' })
-                  // }}
+                  errorMessage={
+                    validity.people?.status === 'error'
+                      ? 'Invalid field'
+                      : undefined
+                  }
+                  value={people}
+                  onChange={(value) => {
+                    dispatch({
+                      type: 'updateField',
+                      target: 'people',
+                      value,
+                    })
+                  }}
+                  onBlur={() => {
+                    dispatch({ type: 'validateField', target: 'people' })
+                    dispatch({ type: 'dirtyField', target: 'people' })
+                  }}
                   icon={<Person />}
                 />
               </Stack>
