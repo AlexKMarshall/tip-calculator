@@ -40,8 +40,8 @@ function renderBackgroundProvider(
 export type BoxProps = Omit<AllHTMLAttributes<HTMLElement>, 'className'> & {
   children: ReactNode
   padding?: ResponsiveValue<Space>
-  paddingInline?: Space
-  paddingTop?: Space
+  paddingInline?: ResponsiveValue<Space>
+  paddingTop?: ResponsiveValue<Space>
   background?: ValidBackground
   borderRadius?: ResponsiveValue<ValidBorderRadius>
   borderTopRadius?: ResponsiveValue<ValidBorderRadius>

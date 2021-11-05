@@ -16,7 +16,7 @@ export function Center({
   gutter = 'none',
   intrinsic,
 }: Props): JSX.Element {
-  const sprinkles = sprinklesFn({ paddingInline: { s: gutter } })
+  const sprinkles = sprinklesFn({ paddingInline: gutter })
 
   return (
     <Box

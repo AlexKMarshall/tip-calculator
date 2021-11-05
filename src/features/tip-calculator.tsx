@@ -170,7 +170,7 @@ export function TipCalculator(props: Props): JSX.Element {
     : 0
 
   return (
-    <Center component="main" gutter="xl">
+    <Center component="main" gutter={{ s: 'xl' }}>
       <Cover space="l">
         <Heading level="3" component="h1" textAlign="center">
           <HiddenVisually>Splitter</HiddenVisually>
