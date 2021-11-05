@@ -1,9 +1,6 @@
 import * as styles from './number-input.css'
 
 import { AllHTMLAttributes, ReactNode, useState } from 'react'
-import { Cluster, Stack, Text } from 'src/components'
-
-import clsx from 'clsx'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
@@ -11,9 +8,8 @@ type Props = Pick<
   InputProps,
   'min' | 'step' | 'onBlur' | 'onFocus' | 'placeholder'
 > & {
-  label: ReactNode
   id: string
-  errorMessage?: string
+  errorId?: string
   value: number | null
   onChange: (value: number) => void
   icon?: ReactNode
@@ -25,15 +21,14 @@ function defaultFormatter(value: number) {
 }
 
 export function NumberInput({
-  label,
   id,
-  errorMessage,
+  errorId,
   value,
   min,
   step,
   onChange,
   onBlur,
-  onFocus: onFocusProp,
+  onFocus,
   placeholder,
   icon,
   formatter = defaultFormatter,
@@ -42,67 +37,46 @@ export function NumberInput({
 
   const formattedValue = value === null ? null : formatter(value)
 
-  return (
-    <Stack space="2xs">
-      <Cluster justify="space-between" align="baseline">
-        <label htmlFor={id}>
-          <Text size="xs" weight="strong" tone="secondary">
-            {label}
-          </Text>
-        </label>
+  const editProps = {
+    value: value ?? '',
+    type: 'number',
+    min,
+    step,
+  }
 
-        {errorMessage ? (
-          <Text id={`${id}-error`} tone="critical" size="xs" weight="strong">
-            {errorMessage}
-          </Text>
-        ) : null}
-      </Cluster>
-      <div className={styles.wrapper}>
-        {icon ? (
-          <div className={styles.icon} aria-hidden>
-            {icon}
-          </div>
-        ) : null}
-        {isEditing ? (
-          <input
-            className={styles.input({ icon: Boolean(icon) })}
-            id={id}
-            type="number"
-            value={value ?? ''}
-            min={min}
-            step={step}
-            aria-invalid={Boolean(errorMessage)}
-            aria-describedby={errorMessage ? `${id}-error` : undefined}
-            onChange={(e) => {
-              onChange(e.target.valueAsNumber)
-            }}
-            onBlur={(e) => {
-              setIsEditing(false)
-              onBlur?.(e)
-            }}
-            placeholder={placeholder}
-          />
-        ) : (
-          <input
-            className={clsx(
-              styles.input({ icon: Boolean(icon) }),
-              styles.formattedInput
-            )}
-            id={id}
-            type="text"
-            value={formattedValue ?? ''}
-            readOnly
-            aria-invalid={Boolean(errorMessage)}
-            aria-describedby={errorMessage ? `${id}-error` : undefined}
-            onFocus={(e) => {
-              setIsEditing(true)
-              e.target.select()
-              onFocusProp?.(e)
-            }}
-            placeholder={placeholder}
-          />
-        )}
-      </div>
-    </Stack>
+  const readProps = {
+    type: 'text',
+    value: formattedValue ?? '',
+    readOnly: true,
+  }
+
+  return (
+    <div className={styles.wrapper}>
+      {icon ? (
+        <div className={styles.icon} aria-hidden>
+          {icon}
+        </div>
+      ) : null}
+      <input
+        className={styles.input({ icon: Boolean(icon) })}
+        id={id}
+        aria-invalid={Boolean(errorId)}
+        aria-describedby={errorId}
+        onChange={(e) => {
+          onChange(e.target.valueAsNumber)
+        }}
+        onBlur={(e) => {
+          setIsEditing(false)
+          onBlur?.(e)
+        }}
+        onFocus={(e) => {
+          setIsEditing(true)
+          e.target.select()
+          onFocus?.(e)
+        }}
+        placeholder={placeholder}
+        {...(isEditing ? editProps : readProps)}
+      />
+    </div>
   )
 }

@@ -8,7 +8,7 @@ import {
   Grid,
   Heading,
   HiddenVisually,
-  NumberInput,
+  NumberField,
   RadioButton,
   Stack,
   Switcher,
@@ -187,7 +187,7 @@ export function TipCalculator(props: Props): JSX.Element {
           <Switcher component="form">
             <Box>
               <Stack space="m">
-                <NumberInput
+                <NumberField
                   label="Bill"
                   id="bill"
                   errorMessage={
@@ -231,7 +231,7 @@ export function TipCalculator(props: Props): JSX.Element {
                         label={`${tipOption}%`}
                       />
                     ))}
-                    <NumberInput
+                    <NumberField
                       label={<HiddenVisually>Custom Tip Amount</HiddenVisually>}
                       id="customTip"
                       errorMessage={
@@ -259,7 +259,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     />
                   </Grid>
                 </Fieldset>
-                <NumberInput
+                <NumberField
                   label="Number of People"
                   id="people"
                   errorMessage={
