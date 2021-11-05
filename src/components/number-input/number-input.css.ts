@@ -12,6 +12,7 @@ const iconSize = createVar()
 export const wrapper = style({
   position: 'relative',
   fontSize: typographyThemeTokens.typography.size.m,
+  display: 'flex',
 
   vars: {
     [padding]: '0.5em',
@@ -54,7 +55,7 @@ export const input = recipe({
   },
 })
 
-export const formattedInput = style({
+export const readInput = style({
   paddingInlineEnd: spaceThemeTokens.space.s,
 })
 

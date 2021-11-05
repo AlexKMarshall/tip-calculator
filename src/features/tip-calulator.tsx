@@ -9,6 +9,7 @@ import {
   Heading,
   HiddenVisually,
   NumberField,
+  NumberInput,
   RadioButton,
   Stack,
   Switcher,
@@ -231,14 +232,8 @@ export function TipCalculator(props: Props): JSX.Element {
                         label={`${tipOption}%`}
                       />
                     ))}
-                    <NumberField
-                      label={<HiddenVisually>Custom Tip Amount</HiddenVisually>}
+                    <NumberInput
                       id="customTip"
-                      errorMessage={
-                        validity.customTip?.status === 'error'
-                          ? 'Invalid field'
-                          : undefined
-                      }
                       min={0}
                       value={customTip}
                       onChange={(value) => {

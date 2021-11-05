@@ -2,6 +2,8 @@ import * as styles from './number-input.css'
 
 import { AllHTMLAttributes, ReactNode, useState } from 'react'
 
+import clsx from 'clsx'
+
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
 type Props = Pick<
@@ -58,7 +60,10 @@ export function NumberInput({
         </div>
       ) : null}
       <input
-        className={styles.input({ icon: Boolean(icon) })}
+        className={clsx(
+          styles.input({ icon: Boolean(icon) }),
+          !isEditing && styles.readInput
+        )}
         id={id}
         aria-invalid={Boolean(errorId)}
         aria-describedby={errorId}
