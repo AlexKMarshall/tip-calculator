@@ -298,6 +298,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     weight="strong"
                     component="output"
                     id="tip-amount"
+                    tone="brand"
                   >
                     ${tipPerPerson.toFixed(2)}
                   </Text>
@@ -314,6 +315,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     weight="strong"
                     component="output"
                     id="total-amount"
+                    tone="brand"
                   >
                     ${totalPerPerson.toFixed(2)}
                   </Text>
