@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
+
 import { Box } from '..'
 import { button } from './button.css'
 
@@ -14,7 +15,7 @@ export function Button({
   return (
     <Box
       component="button"
-      padding="xs"
+      padding="2xs"
       background="accentActive"
       type={type}
       onClick={onClick}

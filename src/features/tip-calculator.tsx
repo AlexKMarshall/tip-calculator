@@ -280,7 +280,7 @@ export function TipCalculator(props: Props): JSX.Element {
             </Box>
 
             <Box
-              padding="m"
+              padding={{ all: 'm', s: 'l' }}
               background="accent"
               borderRadius="l"
               display="grid"
@@ -288,19 +288,33 @@ export function TipCalculator(props: Props): JSX.Element {
               <Stack split>
                 <Cluster justify="space-between" space="s">
                   <Stack component="label" space="2xs" htmlFor="tip-amount">
-                    <Text>Tip Amount</Text>
-                    <Text size="xs">/ person</Text>
+                    <Text weight="strong">Tip Amount</Text>
+                    <Text weight="strong" size="xs" tone="secondary">
+                      / person
+                    </Text>
                   </Stack>
-                  <Text size="xl" component="output" id="tip-amount">
+                  <Text
+                    size="xl"
+                    weight="strong"
+                    component="output"
+                    id="tip-amount"
+                  >
                     ${tipPerPerson.toFixed(2)}
                   </Text>
                 </Cluster>
                 <Cluster justify="space-between" space="s">
                   <Stack component="label" htmlFor="total-amount" space="2xs">
-                    <Text>Total</Text>
-                    <Text size="xs">/ person</Text>
+                    <Text weight="strong">Total</Text>
+                    <Text size="xs" weight="strong" tone="secondary">
+                      / person
+                    </Text>
                   </Stack>
-                  <Text size="xl" component="output" id="total-amount">
+                  <Text
+                    size="xl"
+                    weight="strong"
+                    component="output"
+                    id="total-amount"
+                  >
                     ${totalPerPerson.toFixed(2)}
                   </Text>
                 </Cluster>

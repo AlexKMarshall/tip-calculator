@@ -1,6 +1,8 @@
-import { AllHTMLAttributes } from 'react'
-import { hiddenVisually, Text } from '..'
 import * as styles from './radio-button.css'
+
+import { Text, hiddenVisually } from '..'
+
+import { AllHTMLAttributes } from 'react'
 
 type Props = Pick<
   AllHTMLAttributes<HTMLInputElement>,
@@ -31,7 +33,9 @@ export function RadioButton({
         checked={checked}
       />
       <label htmlFor={id} className={styles.label}>
-        <Text size="m">{label}</Text>
+        <Text size="m" weight="strong">
+          {label}
+        </Text>
       </label>
     </>
   )
