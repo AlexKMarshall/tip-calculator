@@ -297,6 +297,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     size="xl"
                     weight="strong"
                     component="output"
+                    htmlFor="bill tip people"
                     id="tip-amount"
                     tone="brand"
                   >
@@ -314,6 +315,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     size="xl"
                     weight="strong"
                     component="output"
+                    htmlFor="bill tip people"
                     id="total-amount"
                     tone="brand"
                   >

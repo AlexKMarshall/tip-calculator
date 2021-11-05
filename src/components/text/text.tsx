@@ -13,7 +13,7 @@ import { useBackground } from '..'
 
 type AllElementProps = AllHTMLAttributes<HTMLElement>
 
-type TextProps = Pick<AllElementProps, 'id'> & {
+type TextProps = Pick<AllElementProps, 'id' | 'htmlFor'> & {
   children: ReactNode
   size?: 'xs' | 's' | 'm' | 'l' | 'xl' | '2xl'
   component?: ElementType
