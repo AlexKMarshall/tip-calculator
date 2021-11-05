@@ -1,9 +1,19 @@
-import { ReactNode } from 'react'
+import { AllHTMLAttributes, ElementType, ReactNode } from 'react'
+
 import { hiddenVisually } from './hidden-visually.css'
 
-type Props = {
+type Props = Pick<AllHTMLAttributes<HTMLElement>, 'htmlFor'> & {
   children: ReactNode
+  component?: ElementType
 }
-export function HiddenVisually({ children }: Props): JSX.Element {
-  return <span className={hiddenVisually}>{children}</span>
+export function HiddenVisually({
+  component: Component = 'span',
+  children,
+  ...props
+}: Props): JSX.Element {
+  return (
+    <Component className={hiddenVisually} {...props}>
+      {children}
+    </Component>
+  )
 }

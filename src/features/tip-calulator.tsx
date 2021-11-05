@@ -4,6 +4,7 @@ import {
   Center,
   Cluster,
   Cover,
+  Fieldset,
   Grid,
   Heading,
   HiddenVisually,
@@ -210,8 +211,7 @@ export function TipCalculator(props: Props): JSX.Element {
                   icon={<Dollar />}
                   formatter={formatCurrency}
                 />
-                <fieldset>
-                  <legend>Select Tip %</legend>
+                <Fieldset label="Select Tip %" id="tip">
                   <Grid>
                     {presetTips.map((tipOption) => (
                       <RadioButton
@@ -258,7 +258,7 @@ export function TipCalculator(props: Props): JSX.Element {
                       placeholder="Custom"
                     />
                   </Grid>
-                </fieldset>
+                </Fieldset>
                 <NumberInput
                   label="Number of People"
                   id="people"
