@@ -1,36 +1,51 @@
 import * as styles from './radio-button.css'
 
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 import { Text, hiddenVisually } from '..'
 
 import { AllHTMLAttributes } from 'react'
 
-type Props = Pick<
-  AllHTMLAttributes<HTMLInputElement>,
-  'value' | 'onChange' | 'checked'
-> & {
-  name: string
-  label: string
-  id: string
+declare module 'react' {
+  function forwardRef<T, P = {}>(
+    render: (props: P, ref: React.Ref<T>) => React.ReactElement | null
+  ): (props: P & React.RefAttributes<T>) => React.ReactElement | null
 }
 
-export function RadioButton({
+type Props<TFieldValues extends FieldValues> = Pick<
+  AllHTMLAttributes<HTMLInputElement>,
+  'value'
+> &
+  UseControllerProps<TFieldValues> & {
+    name: string
+    label: string
+    id: string
+  }
+
+export function RadioButton<TFieldValues extends FieldValues>({
   value,
   name,
-  onChange,
-  checked,
   label,
   id,
-}: Props): JSX.Element {
+  control,
+}: Props<TFieldValues>): JSX.Element {
+  const {
+    field: { ref, value: groupValue, onChange, onBlur },
+  } = useController({ name, control })
+
   return (
     <>
       <input
+        ref={ref}
         className={hiddenVisually}
         id={id}
         type="radio"
         value={value}
         name={name}
-        onChange={onChange}
-        checked={checked}
+        onChange={(e) => {
+          onChange(parseInt(e.target.value))
+        }}
+        onBlur={onBlur}
+        checked={value === groupValue}
       />
       <label htmlFor={id} className={styles.label}>
         <Text size="m" weight="strong">

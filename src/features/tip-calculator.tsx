@@ -1,3 +1,5 @@
+import * as z from 'zod'
+
 import {
   Box,
   Button,
@@ -21,6 +23,7 @@ import { Person } from 'src/components/icons/person'
 import { heading } from './tip-calculator.css'
 import { useForm } from 'react-hook-form'
 import { useReducer } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 const presetTips = [5, 10, 15, 25, 50] as const
 
@@ -152,37 +155,52 @@ function formatCurrency(value: number) {
 type FormData = {
   bill: number | null
   customTip: number | null
+  tip: string | null
   people: number | null
 }
 
+const formSchema = z.object({
+  bill: z.number().min(1, "can't be zero").nullable(),
+  customTip: z.number().nullable(),
+  tip: z.number().nullable(),
+  people: z.number().min(1, "can't be zero").nullable(),
+})
+
 type Props = {}
 export function TipCalculator(props: Props): JSX.Element {
-  const { control } = useForm<FormData>({
+  const { control, watch, formState } = useForm({
     defaultValues: {
       bill: 0,
+      tip: 15,
       customTip: null,
       people: 0,
     },
+    resolver: zodResolver(formSchema),
+    mode: 'onTouched',
   })
+  const { isDirty, isValid, errors } = formState
+  const allFields = watch()
+  console.log(allFields)
+  console.log({ isDirty, isValid })
 
-  const [formState, dispatch] = useReducer(formReducer, initialFormState)
+  // const [formState, dispatch] = useReducer(formReducer, initialFormState)
 
-  const {
-    values: { bill, presetTip, people, customTip },
-    validity,
-  } = formState
+  // const {
+  //   values: { bill, presetTip, people, customTip },
+  //   validity,
+  // } = formState
 
-  const appliedTip = presetTip ?? customTip ?? 0
+  // const appliedTip = presetTip ?? customTip ?? 0
 
-  const isFormValid =
-    validity.bill?.status === 'valid' &&
-    validity.people?.status === 'valid' &&
-    validity.customTip?.status !== 'error'
+  // const isFormValid =
+  //   validity.bill?.status === 'valid' &&
+  //   validity.people?.status === 'valid' &&
+  //   validity.customTip?.status !== 'error'
 
-  const tipPerPerson = isFormValid ? (bill * (appliedTip / 100)) / people : 0
-  const totalPerPerson = isFormValid
-    ? (bill * (1 + appliedTip / 100)) / people
-    : 0
+  // const tipPerPerson = isFormValid ? (bill * (appliedTip / 100)) / people : 0
+  // const totalPerPerson = isFormValid
+  //   ? (bill * (1 + appliedTip / 100)) / people
+  //   : 0
 
   return (
     <Center component="main" gutter={{ s: 'xl' }}>
@@ -208,11 +226,7 @@ export function TipCalculator(props: Props): JSX.Element {
                   label="Bill"
                   id="bill"
                   control={control}
-                  // errorMessage={
-                  //   validity.bill?.status === 'error'
-                  //     ? 'Invalid field'
-                  //     : undefined
-                  // }
+                  errorMessage={errors.bill?.message}
                   // value={bill}
                   min="0"
                   // onChange={(value) => {
@@ -233,19 +247,20 @@ export function TipCalculator(props: Props): JSX.Element {
                   <Grid>
                     {presetTips.map((tipOption) => (
                       <RadioButton
+                        name="tip"
+                        control={control}
                         key={tipOption}
                         id={`${tipOption}`}
                         value={tipOption}
-                        name="tip-percent"
-                        onChange={() => {
-                          dispatch({ type: 'deselectTip', target: 'customTip' })
-                          dispatch({
-                            type: 'updateField',
-                            target: 'presetTip',
-                            value: tipOption,
-                          })
-                        }}
-                        checked={tipOption === presetTip}
+                        // name="tip-percent"
+                        // onChange={() => {
+                        //   dispatch({ type: 'deselectTip', target: 'customTip' })
+                        //   dispatch({
+                        //     type: 'updateField',
+                        //     target: 'presetTip',
+                        //     value: tipOption,
+                        //   })
+                        // }}
                         label={`${tipOption}%`}
                       />
                     ))}
@@ -278,6 +293,7 @@ export function TipCalculator(props: Props): JSX.Element {
                   id="people"
                   name="people"
                   control={control}
+                  errorMessage={errors.people?.message}
                   // errorMessage={
                   //   validity.people?.status === 'error'
                   //     ? 'Invalid field'
@@ -322,7 +338,7 @@ export function TipCalculator(props: Props): JSX.Element {
                     id="tip-amount"
                     tone="brand"
                   >
-                    ${tipPerPerson.toFixed(2)}
+                    {/* ${tipPerPerson.toFixed(2)} */}
                   </Text>
                 </Cluster>
                 <Cluster justify="space-between" space="s">
@@ -340,12 +356,12 @@ export function TipCalculator(props: Props): JSX.Element {
                     id="total-amount"
                     tone="brand"
                   >
-                    ${totalPerPerson.toFixed(2)}
+                    {/* ${totalPerPerson.toFixed(2)} */}
                   </Text>
                 </Cluster>
                 <Button
                   type="reset"
-                  onClick={() => dispatch({ type: 'reset' })}
+                  // onClick={() => dispatch({ type: 'reset' })}
                 >
                   Reset
                 </Button>

@@ -13,10 +13,6 @@ import clsx from 'clsx'
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
-export type NumberFieldValues = {
-  [x: string]: number | null
-}
-
 declare module 'react' {
   function forwardRef<T, P = {}>(
     render: (props: P, ref: React.Ref<T>) => React.ReactElement | null
