@@ -1,39 +1,44 @@
-import { AllHTMLAttributes, ReactNode } from 'react'
+import { AllHTMLAttributes, ForwardedRef, ReactNode, forwardRef } from 'react'
 import { Cluster, NumberInput, Stack, Text } from 'src/components'
+import { FieldValues, UseControllerProps } from 'react-hook-form'
+
+declare module 'react' {
+  function forwardRef<T, P = {}>(
+    render: (props: P, ref: React.Ref<T>) => React.ReactElement | null
+  ): (props: P & React.RefAttributes<T>) => React.ReactElement | null
+}
 
 type InputProps = AllHTMLAttributes<HTMLInputElement>
 
-type Props = Pick<
+type Props<TFieldValues extends FieldValues> = Pick<
   InputProps,
-  'min' | 'step' | 'onBlur' | 'onFocus' | 'placeholder'
-> & {
-  label: ReactNode
-  id: string
-  errorMessage?: string
-  value: number | null
-  onChange: (value: number) => void
-  icon?: ReactNode
-  formatter?: (value: number) => string
-}
+  'min' | 'step' | 'onFocus' | 'placeholder'
+> &
+  UseControllerProps<TFieldValues> & {
+    label: ReactNode
+    id: string
+    errorMessage?: string
+    icon?: ReactNode
+    formatter?: (value: number) => string
+    name: string
+  }
 
-function defaultFormatter(value: number) {
-  return value.toString()
-}
-
-export function NumberField({
-  label,
-  id,
-  errorMessage,
-  value,
-  min,
-  step,
-  onChange,
-  onBlur,
-  onFocus,
-  placeholder,
-  icon,
-  formatter = defaultFormatter,
-}: Props): JSX.Element {
+function NumberFieldInner<TFieldValues extends FieldValues>(
+  {
+    label,
+    id,
+    errorMessage,
+    min,
+    step,
+    onFocus,
+    placeholder,
+    icon,
+    formatter,
+    name,
+    control,
+  }: Props<TFieldValues>,
+  ref: ForwardedRef<HTMLInputElement>
+): JSX.Element {
   return (
     <Stack space="2xs">
       <Cluster justify="space-between" align="baseline">
@@ -50,18 +55,19 @@ export function NumberField({
         ) : null}
       </Cluster>
       <NumberInput
+        ref={ref}
         icon={icon}
         id={id}
-        value={value}
+        control={control}
         min={min}
         step={step}
         errorId={errorMessage ? `${id}-error` : ''}
-        onChange={onChange}
-        onBlur={onBlur}
         onFocus={onFocus}
         placeholder={placeholder}
         formatter={formatter}
+        name={name}
       />
     </Stack>
   )
 }
+export const NumberField = forwardRef(NumberFieldInner)
