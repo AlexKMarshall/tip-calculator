@@ -25,7 +25,7 @@ type Props<TFieldValues extends FieldValues> = Pick<
 > &
   UseControllerProps<TFieldValues> & {
     id: string
-    errorId?: string
+    errorId?: string | undefined
     icon?: ReactNode
     formatter?: (value: number) => string
   }
@@ -85,7 +85,7 @@ function NumberInputInner<TFieldValues extends FieldValues>(
         )}
         id={id}
         aria-invalid={Boolean(errorId)}
-        aria-describedby={errorId}
+        {...(errorId ? { ariaDescribedBy: errorId } : {})}
         onChange={(e) => {
           onChange(e.target.valueAsNumber)
           onChangeProp?.(e)

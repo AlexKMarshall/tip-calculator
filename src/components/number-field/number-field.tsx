@@ -61,7 +61,7 @@ function NumberFieldInner<TFieldValues extends FieldValues>(
         control={control}
         min={min}
         step={step}
-        errorId={errorMessage ? `${id}-error` : ''}
+        errorId={errorMessage ? `${id}-error` : undefined}
         onFocus={onFocus}
         placeholder={placeholder}
         formatter={formatter}

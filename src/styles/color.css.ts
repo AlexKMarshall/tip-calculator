@@ -17,7 +17,7 @@ export const colorThemeTokens = createGlobalTheme(':root', {
     },
     dark: {
       neutral: 'hsl(0 0% 100% / 0.95)',
-      secondary: 'hsl(184 14% 56%)',
+      secondary: 'hsl(184 14% 68%)',
     },
   },
   tone: {

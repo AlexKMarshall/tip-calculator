@@ -115,6 +115,9 @@ export function TipCalculator(): JSX.Element {
                         label={`${tipOption}%`}
                       />
                     ))}
+                    <HiddenVisually component="label" htmlFor="customTip">
+                      Custom Tip Percentage
+                    </HiddenVisually>
                     <NumberInput
                       id="customTip"
                       min={0}

@@ -7,6 +7,10 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Splitter - Tip Calculator</title>
+        <meta
+          name="description"
+          content="Easily calculate the tip and payment share when out with a group of friends."
+        />
       </Head>
       <TipCalculator />
     </>
