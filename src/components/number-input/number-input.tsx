@@ -21,13 +21,11 @@ declare module 'react' {
 
 type Props<TFieldValues extends FieldValues> = Pick<
   InputProps,
-  'min' | 'step' | 'onFocus' | 'placeholder'
+  'min' | 'step' | 'onFocus' | 'placeholder' | 'onChange'
 > &
   UseControllerProps<TFieldValues> & {
     id: string
     errorId?: string
-    // value: number | null
-    // onChange: (value: number) => void
     icon?: ReactNode
     formatter?: (value: number) => string
   }
@@ -40,11 +38,9 @@ function NumberInputInner<TFieldValues extends FieldValues>(
   {
     id,
     errorId,
-    // value,
     min,
     step,
-    // onChange,
-    // onBlur,
+    onChange: onChangeProp,
     onFocus,
     placeholder,
     icon,
@@ -92,6 +88,7 @@ function NumberInputInner<TFieldValues extends FieldValues>(
         aria-describedby={errorId}
         onChange={(e) => {
           onChange(e.target.valueAsNumber)
+          onChangeProp?.(e)
         }}
         onBlur={(e) => {
           setIsEditing(false)
@@ -104,6 +101,7 @@ function NumberInputInner<TFieldValues extends FieldValues>(
         }}
         placeholder={placeholder}
         name={name}
+        autoComplete="off"
         {...(isEditing ? editProps : readProps)}
       />
     </div>

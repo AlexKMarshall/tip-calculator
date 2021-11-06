@@ -13,7 +13,7 @@ declare module 'react' {
 
 type Props<TFieldValues extends FieldValues> = Pick<
   AllHTMLAttributes<HTMLInputElement>,
-  'value'
+  'value' | 'onChange'
 > &
   UseControllerProps<TFieldValues> & {
     name: string
@@ -23,6 +23,7 @@ type Props<TFieldValues extends FieldValues> = Pick<
 
 export function RadioButton<TFieldValues extends FieldValues>({
   value,
+  onChange: onChangeProp,
   name,
   label,
   id,
@@ -43,6 +44,7 @@ export function RadioButton<TFieldValues extends FieldValues>({
         name={name}
         onChange={(e) => {
           onChange(parseInt(e.target.value))
+          onChangeProp?.(e)
         }}
         onBlur={onBlur}
         checked={value === groupValue}
