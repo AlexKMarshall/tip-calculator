@@ -1,6 +1,6 @@
-import { Box, BoxProps } from '..'
 import { cover, inner } from './cover.css'
 
+import { Box } from '..'
 import { ReactNode } from 'react'
 import { Space } from 'src/styles/space.css'
 import { sprinklesFn } from 'src/styles/sprinkles.css'

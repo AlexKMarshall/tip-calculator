@@ -1,7 +1,6 @@
 import { colorThemeTokens } from 'src/styles/color.css'
 import { spaceThemeTokens } from 'src/styles/space.css'
 import { style } from '@vanilla-extract/css'
-import { typographyThemeTokens } from 'src/styles/typography.css'
 
 export const input = style({
   appearance: 'none',

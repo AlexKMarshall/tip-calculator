@@ -22,123 +22,9 @@ import { Dollar } from 'src/components/icons/dollar'
 import { Person } from 'src/components/icons/person'
 import { heading } from './tip-calculator.css'
 import { useForm } from 'react-hook-form'
-import { useReducer } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 const presetTips = [5, 10, 15, 25, 50] as const
-
-type FormValues = {
-  bill: number
-  people: number
-  presetTip: typeof presetTips[number] | null
-  customTip: number | null
-}
-
-type FormValidators = {
-  [k in keyof FormValues]?: (val: unknown) => boolean
-}
-
-type FormValidity = {
-  [k in keyof FormValues]?:
-    | { status: 'error'; message?: string }
-    | { status: 'valid' }
-}
-
-type FormDirty = {
-  [k in keyof FormValues]?: { status: 'dirty' }
-}
-
-type FormState = {
-  values: FormValues
-  validity: FormValidity
-  dirty: FormDirty
-}
-
-const isPositive = (value: unknown) => typeof value === 'number' && value > 0
-const isNonNegative = (value: unknown) =>
-  typeof value === 'number' && value >= 0
-
-const formValidators: FormValidators = {
-  bill: isPositive,
-  people: isPositive,
-  customTip: (val) => val === null || isNonNegative(val),
-}
-
-const initialFormState: FormState = {
-  values: {
-    bill: 0,
-    people: 0,
-    presetTip: 15,
-    customTip: null,
-  },
-  validity: {},
-  dirty: {},
-}
-
-type FormAction<T extends keyof FormState['values']> =
-  | {
-      type: 'updateField'
-      target: T
-      value: FormState['values'][T]
-    }
-  | { type: 'deselectTip'; target: 'presetTip' | 'customTip' }
-  | { type: 'reset' }
-  | { type: 'validateField'; target: T }
-  | { type: 'dirtyField'; target: T }
-
-function formReducer<T extends keyof FormState['values']>(
-  state: FormState,
-  action: FormAction<T>
-): FormState {
-  switch (action.type) {
-    case 'updateField': {
-      const newValue = Number.isNaN(action.value) ? 0 : action.value
-      const updatedState = {
-        ...state,
-        values: { ...state.values, [action.target]: newValue },
-      }
-
-      if (state.dirty[action.target]) {
-        return formReducer(updatedState, {
-          type: 'validateField',
-          target: action.target,
-        })
-      }
-      return updatedState
-    }
-    case 'validateField': {
-      const validator = formValidators[action.target]
-      if (validator) {
-        const currentValue = state.values[action.target]
-        const isValid = validator(currentValue)
-        return {
-          ...state,
-          validity: {
-            ...state.validity,
-            [action.target]: { status: isValid ? 'valid' : 'error' },
-          },
-        }
-      }
-      return state
-    }
-    case 'dirtyField': {
-      return {
-        ...state,
-        dirty: { ...state.dirty, [action.target]: { status: 'dirty' } },
-      }
-    }
-    case 'deselectTip': {
-      return formReducer(state, {
-        type: 'updateField',
-        target: action.target,
-        value: null,
-      })
-    }
-    case 'reset': {
-      return initialFormState
-    }
-  }
-}
 
 function formatCurrency(value: number) {
   const { minimumFractionDigits, maximumFractionDigits } =
@@ -166,8 +52,7 @@ const formSchema = z.object({
   people: z.number().min(1, "can't be zero"),
 })
 
-type Props = {}
-export function TipCalculator(props: Props): JSX.Element {
+export function TipCalculator(): JSX.Element {
   const { control, watch, formState, setValue, reset } = useForm<FormData>({
     defaultValues: {
       bill: 0,
@@ -182,20 +67,6 @@ export function TipCalculator(props: Props): JSX.Element {
   const { bill, people, tip, customTip } = watch()
 
   const appliedTip = tip ?? customTip ?? 0
-
-  // const [formState, dispatch] = useReducer(formReducer, initialFormState)
-
-  // const {
-  //   values: { bill, presetTip, people, customTip },
-  //   validity,
-  // } = formState
-
-  // const appliedTip = presetTip ?? customTip ?? 0
-
-  // const isFormValid =
-  //   validity.bill?.status === 'valid' &&
-  //   validity.people?.status === 'valid' &&
-  //   validity.customTip?.status !== 'error'
 
   const tipPerPerson = isValid ? (bill * (appliedTip / 100)) / people : 0
   const totalPerPerson = isValid ? (bill * (1 + appliedTip / 100)) / people : 0
@@ -225,19 +96,7 @@ export function TipCalculator(props: Props): JSX.Element {
                   id="bill"
                   control={control}
                   errorMessage={errors.bill?.message}
-                  // value={bill}
                   min="0"
-                  // onChange={(value) => {
-                  //   dispatch({
-                  //     type: 'updateField',
-                  //     target: 'bill',
-                  //     value,
-                  //   })
-                  // }}
-                  // onBlur={() => {
-                  //   dispatch({ type: 'validateField', target: 'bill' })
-                  //   dispatch({ type: 'dirtyField', target: 'bill' })
-                  // }}
                   icon={<Dollar />}
                   formatter={formatCurrency}
                 />
@@ -253,15 +112,6 @@ export function TipCalculator(props: Props): JSX.Element {
                         onChange={() => {
                           setValue('customTip', null)
                         }}
-                        // name="tip-percent"
-                        // onChange={() => {
-                        //   dispatch({ type: 'deselectTip', target: 'customTip' })
-                        //   dispatch({
-                        //     type: 'updateField',
-                        //     target: 'presetTip',
-                        //     value: tipOption,
-                        //   })
-                        // }}
                         label={`${tipOption}%`}
                       />
                     ))}
@@ -273,21 +123,6 @@ export function TipCalculator(props: Props): JSX.Element {
                       onChange={() => {
                         setValue('tip', null)
                       }}
-                      // value={customTip}
-                      // onChange={(value) => {
-                      //   dispatch({
-                      //     type: 'updateField',
-                      //     target: 'customTip',
-                      //     value,
-                      //   })
-                      // }}
-                      // onBlur={() => {
-                      //   dispatch({ type: 'validateField', target: 'customTip' })
-                      //   dispatch({ type: 'dirtyField', target: 'customTip' })
-                      // }}
-                      // onFocus={() =>
-                      //   dispatch({ type: 'deselectTip', target: 'presetTip' })
-                      // }
                       placeholder="Custom"
                     />
                   </Grid>
@@ -298,23 +133,6 @@ export function TipCalculator(props: Props): JSX.Element {
                   name="people"
                   control={control}
                   errorMessage={errors.people?.message}
-                  // errorMessage={
-                  //   validity.people?.status === 'error'
-                  //     ? 'Invalid field'
-                  //     : undefined
-                  // }
-                  // value={people}
-                  // onChange={(value) => {
-                  //   dispatch({
-                  //     type: 'updateField',
-                  //     target: 'people',
-                  //     value,
-                  //   })
-                  // }}
-                  // onBlur={() => {
-                  //   dispatch({ type: 'validateField', target: 'people' })
-                  //   dispatch({ type: 'dirtyField', target: 'people' })
-                  // }}
                   icon={<Person />}
                 />
               </Stack>

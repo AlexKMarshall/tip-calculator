@@ -1,11 +1,5 @@
 import { AllHTMLAttributes, ForwardedRef, ReactNode, forwardRef } from 'react'
-import {
-  Cluster,
-  NumberFieldValues,
-  NumberInput,
-  Stack,
-  Text,
-} from 'src/components'
+import { Cluster, NumberInput, Stack, Text } from 'src/components'
 import { FieldValues, UseControllerProps } from 'react-hook-form'
 
 declare module 'react' {
@@ -24,31 +18,22 @@ type Props<TFieldValues extends FieldValues> = Pick<
     label: ReactNode
     id: string
     errorMessage?: string
-    // value: number | null
-    // onChange: (value: number) => void
     icon?: ReactNode
     formatter?: (value: number) => string
     name: string
   }
-
-function defaultFormatter(value: number) {
-  return value.toString()
-}
 
 function NumberFieldInner<TFieldValues extends FieldValues>(
   {
     label,
     id,
     errorMessage,
-    // value,
     min,
     step,
-    // onChange,
-    // onBlur,
     onFocus,
     placeholder,
     icon,
-    formatter = defaultFormatter,
+    formatter,
     name,
     control,
   }: Props<TFieldValues>,
@@ -74,12 +59,9 @@ function NumberFieldInner<TFieldValues extends FieldValues>(
         icon={icon}
         id={id}
         control={control}
-        // value={value}
         min={min}
         step={step}
         errorId={errorMessage ? `${id}-error` : ''}
-        // onChange={onChange}
-        // onBlur={onBlur}
         onFocus={onFocus}
         placeholder={placeholder}
         formatter={formatter}
